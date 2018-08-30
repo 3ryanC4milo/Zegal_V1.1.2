@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_principal"
+    tools:context=".Contratos_Main_Activity">
+
+    <TextView
+        android:id="@+id/tv_Bienvenido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/TXT_CTR"
+        android:textColor="@color/blanco"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.17" />
+
+    <LinearLayout
+        android:id="@+id/ly_servicios"
+        android:layout_width="123dp"
+        android:layout_height="112dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/blanco"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.197"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.314">
+
+
+        <TextView
+            android:id="@+id/tv_servicios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/CTR_3"
+            android:textColor="@color/azul_pred" />
+
+        <Button
+            android:id="@+id/btn_servicios"
+            android:layout_width="83dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:background="@drawable/c_servicios" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_Software"
+        android:layout_width="123dp"
+        android:layout_height="112dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/blanco"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.812"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.314">
+
+
+        <TextView
+            android:id="@+id/tv_software"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/CTR_1"
+            android:textColor="@color/azul_pred" />
+
+        <Button
+            android:id="@+id/btn_software"
+            android:layout_width="83dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:background="@drawable/c_software" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_laboral"
+        android:layout_width="123dp"
+        android:layout_height="112dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/blanco"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.195"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64">
+
+
+        <TextView
+            android:id="@+id/tv_laboral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/CTR_2"
+            android:textColor="@color/azul_pred" />
+
+        <Button
+            android:id="@+id/btn_laboral"
+            android:layout_width="83dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:background="@drawable/c_laboral" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_alianza"
+        android:layout_width="123dp"
+        android:layout_height="112dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/blanco"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.812"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64">
+
+
+        <TextView
+            android:id="@+id/tv_alianza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/CTR_4"
+            android:textColor="@color/azul_pred" />
+
+        <Button
+            android:id="@+id/btn_alianza"
+            android:layout_width="83dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:background="@drawable/c_alizanza" />
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

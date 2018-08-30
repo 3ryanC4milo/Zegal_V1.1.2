@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "947014534284",
+    "firebase_url": "https://plataforma-zegal-212823.firebaseio.com",
+    "project_id": "plataforma-zegal-212823",
+    "storage_bucket": "plataforma-zegal-212823.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947014534284:android:b0a234c90f0580f6",
+        "android_client_info": {
+          "package_name": "zegal.ganlen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947014534284-d93e0k8pjsbs8b42r2e5edm04si5utv4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zegal.ganlen",
+            "certificate_hash": "719858bc41ec061fdc9d8a4dbeac9850127110eb"
+          }
+        },
+        {
+          "client_id": "947014534284-t0d7j3k7ssoh1ggvht8vg1de1n39ud4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE51HWhk6KTomySqo6khw9n4a_kETjfRs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947014534284-t0d7j3k7ssoh1ggvht8vg1de1n39ud4m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

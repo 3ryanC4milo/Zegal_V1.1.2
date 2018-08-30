@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_principal"
+    tools:context=".Ingresar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ZEGAL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="@string/app_name_main"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/blanco"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/txt_zegal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_principal"
+            android:textAlignment="center"
+            android:textColor="@color/blanco" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/principal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:background="@color/blanco"
+        android:gravity="center"
+        android:paddingEnd="26dip"
+        android:paddingStart="30dip"
+        android:layout_margin="10dp"
+        android:padding="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/dt_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/I_Bienvenida"
+            android:textAlignment="center"
+            android:textColor="@color/azul_pred"
+            android:textSize="18sp" />
+
+
+        <EditText
+            android:id="@+id/ingresar_edit_text_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_email"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            android:nextFocusDown="@id/edit_text_password"
+            android:textColor="@color/gris_btn"
+            android:textColorHint="@color/gris" />
+
+
+        <EditText
+            android:id="@+id/ingresar_edit_text_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_password"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            android:nextFocusDown="@id/edit_text_phone"
+            android:textColor="@color/gris_btn"
+            android:textColorHint="@color/gris" />
+
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/principal"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_ingresar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gris_btn"
+            android:text="@string/title_activity_login"
+            android:layout_margin="10dp"
+            android:textAllCaps="false"
+            android:textColor="@color/blanco" />
+
+        <Button
+            android:id="@+id/botonLogin"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/rectangulo"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/blanco"
+            android:layout_margin="10dp"
+            android:layout_below="@id/button_ingresar"
+            android:onClick="btn_Ingresar_Zegal"
+            tools:text="@string/title_activity_registro" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+

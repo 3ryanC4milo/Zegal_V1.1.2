@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#313131</color>
+    <color name="back">#163cb7</color>
+    <color name="blanco">#FFFFFF</color>
+    <color name="grad_one">#56CCF2</color>
+    <color name="grad_sec">#0076ff</color>
+    <color name="azul_pred">#21345b</color>
+    <color name="botones">#F3F3F3</color>
+    <color name="gris">#8c8c8c</color>
+    <color name="gris_btn">#2E2929</color>
+    <color name="gradient_azul">#006483</color>
+
+    <color name="dot_dark_screenU">#83878b</color>
+    <color name="dot_light_screenU">#eceff1</color>
+
+
+
+
+
+
+
+
+
+
+</resources>

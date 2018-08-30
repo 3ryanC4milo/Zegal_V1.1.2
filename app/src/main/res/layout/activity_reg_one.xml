@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_principal"
+    tools:context=".Reg_one_Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/ZEGAL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="@string/app_name_main"
+            android:textAlignment="center"
+            android:textColor="@color/blanco"
+            android:textSize="@dimen/app_name_size" />
+
+        <TextView
+            android:id="@+id/txt_zegal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_principal"
+            android:textAlignment="center"
+            android:textColor="@color/blanco" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/principal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:background="@color/blanco"
+        android:layout_margin="10dp"
+        android:padding="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/dt_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/azul_pred"
+            android:textSize="18sp"
+            android:text="@string/dt_one" />
+
+        <TextView
+            android:id="@+id/dt_tw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="@string/dt_two" />
+
+
+        <EditText
+            android:id="@+id/edit_text_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_user"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:hint="@string/full_name"
+            android:nextFocusDown="@id/edit_text_email"
+            android:textColor="@color/gris_btn"
+            android:textColorHint="@color/gris" />
+
+
+        <EditText
+            android:id="@+id/edit_text_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_email"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            android:nextFocusDown="@id/edit_text_password"
+            android:textColor="@color/gris_btn"
+            android:textColorHint="@color/gris" />
+
+
+        <EditText
+            android:id="@+id/edit_text_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_password"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            android:nextFocusDown="@id/edit_text_phone"
+            android:textColor="@color/gris_btn"
+            android:textColorHint="@color/gris" />
+
+        <EditText
+            android:id="@+id/edit_text_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="0123456789"
+            android:drawableLeft="@drawable/ic_phone"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:hint="@string/tel"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:nextFocusDown="@id/button_register"
+            android:textColor="@color/gris_btn"
+            android:textColorHint="@color/gris"/>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/principal"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/button_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gris_btn"
+            android:text="@string/txt_bienvenida_reg"
+            android:layout_margin="10dp"
+            android:textAllCaps="false"
+            android:textColor="@color/blanco" />
+
+        <Button
+            android:id="@+id/BTN_cuenta_activa"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/rectangulo"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/blanco"
+            android:layout_margin="10dp"
+            android:onClick="btn_ingresar_secundario"
+            tools:text="@string/cuenta_Act" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>
+
