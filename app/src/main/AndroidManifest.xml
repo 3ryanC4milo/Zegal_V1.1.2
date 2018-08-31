@@ -18,10 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".Reg_one_Activity" />
-        <activity android:name=".Contratos_Main_Activity"
-            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+        <activity
+            android:name=".Contratos_Main_Activity"
             android:label="Bienvenido"
-            />
+            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         <service android:name=".MyFirebaseInstanceService">
             <intent-filter>
@@ -37,10 +37,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".WelcomeActivity" />
-        <activity android:name=".con_servicios"
-            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:label="Editar Contrato | Servicios"/>
-        <activity android:name=".con_alianza"></activity>
+        <activity
+            android:name=".con_servicios"
+            android:label="Editar Contrato | Servicios"
+            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
+        <activity android:name=".con_alianza" />
+        <activity android:name=".Con_software" />
+        <activity android:name=".Con_laboral"/>
     </application>
 
 </manifest>

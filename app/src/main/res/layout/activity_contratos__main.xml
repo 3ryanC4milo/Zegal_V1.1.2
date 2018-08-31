@@ -7,6 +7,35 @@
     android:background="@drawable/gradient_principal"
     tools:context=".Contratos_Main_Activity">
 
+    <LinearLayout
+        android:id="@+id/ly_help"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="480dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="290dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.197"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.314">
+
+        <Button
+            android:id="@+id/btn_help"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/info_64"
+            android:layout_gravity="center"
+            android:onClick="botonClick"
+            />
+
+    </LinearLayout>
+
+
+
     <TextView
         android:id="@+id/tv_Bienvenido"
         android:layout_width="wrap_content"
@@ -54,7 +83,8 @@
             android:layout_width="83dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:background="@drawable/c_servicios" />
+            android:background="@drawable/c_servicios"
+            android:onClick="botonClick"/>
 
     </LinearLayout>
 
@@ -88,7 +118,8 @@
             android:layout_width="83dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:background="@drawable/c_software" />
+            android:background="@drawable/c_software"
+            android:onClick="botonClick"/>
 
 
     </LinearLayout>
@@ -123,7 +154,8 @@
             android:layout_width="83dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:background="@drawable/c_laboral" />
+            android:background="@drawable/c_laboral"
+            android:onClick="botonClick"/>
 
 
     </LinearLayout>
@@ -158,9 +190,11 @@
             android:layout_width="83dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:background="@drawable/c_alizanza" />
+            android:background="@drawable/c_alizanza"
+            android:onClick="botonClick"/>
 
 
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
