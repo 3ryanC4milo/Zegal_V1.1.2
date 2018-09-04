@@ -101,12 +101,26 @@
                 android:inputType="numberDecimal" />
 
             <Spinner
-                android:id="@+id/_"
+                android:id="@+id/sp_pago"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_seven"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_parcial"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/et_pagos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/tv_eight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_fechas"
