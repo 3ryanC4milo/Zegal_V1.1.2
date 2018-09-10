@@ -109,7 +109,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void loadHome()
     {
-        startActivity(new Intent(WelcomeActivity.this,Contratos_Main_Activity.class));
+        startActivity(new Intent(WelcomeActivity.this,Ingresar.class));
         finish();
     }
 }

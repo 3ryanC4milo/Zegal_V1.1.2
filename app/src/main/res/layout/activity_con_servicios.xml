@@ -98,12 +98,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:hint="$0.00"/>
+
+            <TextView
+                android:id="@+id/tv_nine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_parcial"
+                android:textColor="@android:color/black" />
 
             <Spinner
                 android:id="@+id/sp_pago"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/tv_seven"
@@ -117,7 +125,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:hint="0"/>
 
             <TextView
                 android:id="@+id/tv_eight"
@@ -130,6 +139,35 @@
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="200dp">
+
+                <ImageView
+                    android:id="@+id/ivINEfront"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/ivINEback"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:contentDescription="TODO" />
+
+                <LinearLayout
+                    android:id="@+id/ly_lienzo"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="vertical"
+                    >
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_enviar_main_con"

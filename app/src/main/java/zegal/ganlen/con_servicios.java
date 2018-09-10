@@ -1,5 +1,7 @@
 package zegal.ganlen;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,20 +10,50 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 
+import org.json.JSONException;
+
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import zegal.ganlen.Config.Config;
+
 public class con_servicios extends AppCompatActivity {
+
+    private static final int PAYPAL_REQUEST_CODE = 7171;
+    //Esta variable es para jalar la cuenta de prueba para testeo, se requerira cambiar valores despues de las respectivas pruebas
+    private static PayPalConfiguration config = new PayPalConfiguration().environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(Config.PAYPAL_CLIENT_ID);
+
     EditText recibe, presta, finalidad, monto, parcial;
     Spinner spin;
     CalendarView calendarView;
     DatabaseReference mDatabaseReference;
+    ImageView image1, image2;
+    LinearLayout lienzo;
     Button btnEnvia;
+    String cantidad ="";
+    String fec;
+
+
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this,PayPalService.class));
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,26 +62,40 @@ public class con_servicios extends AppCompatActivity {
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
+        //Iniciar servicio PayPay
+
+        Intent intent = new Intent(this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
+        startActivity(intent);
+
         recibe = findViewById(R.id.et_persona_recibe);
         presta = findViewById(R.id.et_persona_presta);
         finalidad = findViewById(R.id.et_finalidad);
         monto = findViewById(R.id.et_monto);
+        monto.addTextChangedListener(new NumberTextWatcher(monto,"##,###.00"));
 
         spin = findViewById(R.id.sp_pago);
-        String[] opcion_pago ={"Pago único", "Pagos parciales"};
+        String[] opcion_pago ={"Seleccione", "Pago único", "Pagos parciales"};
         spin.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opcion_pago));
 
 
         parcial = findViewById(R.id.et_pagos);
         parcial.setEnabled(false);
         calendarView = findViewById(R.id.calendarView);
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                fec = i2+"/"+"0"+(i1+1)+"/"+i;
+            }
+        });
         btnEnvia = findViewById(R.id.btn_enviar_main_con);
 
-        if(spin.getSelectedItem() == "Pagos parciales")
+        if(spin.getSelectedItemPosition() == 2)
         {
             parcial.setEnabled(true);
         }
-        else if(spin.getSelectedItem() == "Pago único")
+        else
         {
             parcial.setEnabled(false);
         }
@@ -62,34 +108,94 @@ public class con_servicios extends AppCompatActivity {
                 String fin = finalidad.getText().toString();
                 double mon = Double.parseDouble(monto.getText().toString());
                 String opc = spin.getSelectedItem().toString();
-                String date = String.valueOf(calendarView.getDate());
+                String date = fec;
 
-                CargaDatosServicios(rec, pre, fin, mon, opc, date);
+
+                if (rec.isEmpty() || pre.isEmpty() || fin.isEmpty() || opc.equals("Seleccione")  || fec.isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "Debes de llenar todos los campos",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+                    CargaDatosServicios(rec, pre, fin, mon, opc, date);
+                    procesarDatos();
+                    //finish();
+                }
             }
         });
 
     }
 
     private void CargaDatosServicios(String rec, String pre, String fin, double mon, String opc, String date) {
-        Map<String, Object> pedido_servicio = new HashMap<>();
-        pedido_servicio.put("Receptor", rec);
-        pedido_servicio.put("Prestador", pre);
-        pedido_servicio.put("Finalidad", fin);
-        pedido_servicio.put("Monto", mon);
-        pedido_servicio.put("Forma_Pago", opc);
+        Servicio servicio;
+        int par=0;
+        String id = mDatabaseReference.push().getKey();
 
         if(opc.equals("Pago único"))
         {
-            pedido_servicio.put("Pagos", 0);
+            par = 0;
         }
         else if (opc.equals("Pagos parciales"))
         {
-            int par = Integer.parseInt(parcial.getText().toString());
-            pedido_servicio.put("Pagos", par);
+            par = Integer.parseInt(parcial.getText().toString());
         }
 
-        pedido_servicio.put("Fecha_Pago", date);
+        servicio = new Servicio(rec, pre, fin, mon, opc, par, date);
+        mDatabaseReference.child("Contrato_Servicio").child(id).setValue(servicio);
+        Toast.makeText(getApplicationContext(),
+                "Datos capturados exitosamente",
+                Toast.LENGTH_LONG).show();
+    }
 
-        mDatabaseReference.child("Contrato_Servicio").push().setValue(pedido_servicio);
+    private void procesarDatos() {
+
+        //Revibe el monto del edittext
+        cantidad = monto.getText().toString();
+
+
+
+        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(cantidad)),"MXN", "Contrato de servicios", PayPalPayment.PAYMENT_INTENT_SALE);
+
+        //Envia parametros
+        Intent intent = new Intent(this, PaymentActivity.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
+        startActivityForResult(intent,PAYPAL_REQUEST_CODE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode == PAYPAL_REQUEST_CODE)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                PaymentConfirmation confirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+
+                if (confirmation != null)
+                {
+                    try {
+                        String paymentDetalle = confirmation.toJSONObject().toString(4);
+                        startActivity(new Intent(this,Forma_Pago.class).putExtra("Nombre",recibe.getText().toString())
+                        .putExtra("Concepto", "Contrato de Servicios")
+                        .putExtra("Monto", cantidad)
+                        .putExtra("Estado", paymentDetalle));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            else if(resultCode == Activity.RESULT_CANCELED)
+            {
+                Toast.makeText(this,"Operacion cancelada",Toast.LENGTH_LONG).show();
+            }
+            else if(resultCode == PaymentActivity.RESULT_EXTRAS_INVALID)
+            {
+                Toast.makeText(this,"Operacion invalida",Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

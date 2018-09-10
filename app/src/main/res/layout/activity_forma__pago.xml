@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Forma_Pago">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tvTrans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="id"/>
+
+            <TextView
+                android:id="@+id/tvCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Nombre"/>
+
+            <TextView
+                android:id="@+id/tvConcepto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Concepto de compra"/>
+
+            <TextView
+                android:id="@+id/tvMonto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Monto a pagar"/>
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Estado"/>
+
+
+
+            <Button
+                android:id="@+id/btnSalirDetalle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_terminar"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

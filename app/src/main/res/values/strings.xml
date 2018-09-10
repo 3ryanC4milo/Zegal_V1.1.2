@@ -72,8 +72,11 @@
     <string name="txt_finalidad">Finalidad del contrato</string>
     <string name="txt_monto">Monto a pagar al prestador.</string>
     <string name="txt_parcial">¿En cuántos pagos se liquidará el servicio?.</string>
+    <string name="txt_facil">Facilidad de pago.</string>
     <string name="txt_fechas">Fecha de pago.</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 
 
+    <!-- Strings Contrato servicios-->
+    <string name="btn_terminar">Terminar</string>
 </resources>

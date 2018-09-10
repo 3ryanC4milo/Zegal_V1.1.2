@@ -99,8 +99,8 @@ public class Ingresar extends AppCompatActivity {
     }
 
     private void attemptLogin() {
-        String email = login_email.getText().toString();
-        String password = login_password.getText().toString();
+        String email = login_email.getText().toString().trim();
+        String password = login_password.getText().toString().trim();
 
         showProgress(true);
         mAuth.signInWithEmailAndPassword(email, password)
