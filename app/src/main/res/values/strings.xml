@@ -11,6 +11,8 @@
     <string name="input_error_password_length">password should be atleast 6 characters long</string>
     <string name="input_error_phone_invalid">Ingresa un número válido</string>
     <string name="registration_success">Registro Exitoso</string>
+    <string name="registration_fail">Registro Fallído</string>
+
     <string name="input_error_email_invalid">Ingresa un email válido</string>
 
 

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -37,103 +38,90 @@ import com.google.firebase.database.ValueEventListener;
 public class Ingresar extends AppCompatActivity {
     Context mContext;
     private EditText login_email, login_password;
-    private Button btn_firebase_login;
+    private Button btn_firebase_login, btn_firebase_registro;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressBar progressBar;
-    private FirebaseAuth mAuth;
-    private View mProgressView;
+    private FirebaseAuth auth;
+    private ProgressDialog PD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingresar);
-        mContext = this;
-        mAuth = FirebaseAuth.getInstance();
+        PD = new ProgressDialog(this);
+        PD.setMessage("Cargando...");
+        PD.setCancelable(true);
+        PD.setCanceledOnTouchOutside(false);
+        //Get FireBase auth instance
+        auth = FirebaseAuth.getInstance();
 
         login_email = findViewById(R.id.ingresar_edit_text_email);
         login_password = findViewById(R.id.ingresar_edit_text_password);
+        btn_firebase_registro = findViewById(R.id.button_registro);
         btn_firebase_login = findViewById(R.id.button_ingresar);
-        btn_firebase_login.setOnClickListener(new Button.OnClickListener() {
+        // Validating Login Credits with Firebase
+        btn_firebase_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO : click event
-                attemptLogin();
+                final String email = login_email.getText().toString();
+                final String password = login_password.getText().toString();
+
+                try {
+
+                    if (password.length() > 0 && email.length() > 0) {
+                        PD.show();
+                        // Authenticate user
+                        auth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(Ingresar.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (!task.isSuccessful()) {
+                                            Toast.makeText(
+                                                    Ingresar.this,
+                                                    "Authentication Failed",
+                                                    Toast.LENGTH_LONG).show();
+                                            Log.v("error", task.getResult().toString());
+                                        } else {
+                                            Intent intent = new Intent(Ingresar.this, Contratos_Main_Activity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        PD.dismiss();
+                                    }
+                                });
+                    } else {
+                        Toast.makeText(
+                                Ingresar.this,
+                                "Fill All Fields",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
-        // [START auth_state_listener]
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-
+        // Link to Registration Screen
+        btn_firebase_registro.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d("TEST", "onAuthStateChanged:signed_in:" + user.getUid());
-                    Intent intent = new Intent(getApplicationContext(), Contratos_Main_Activity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    // User is signed out
-                    Log.d("TEST", "onAuthStateChanged:signed_out");
-                }
+            public void onClick(View view) {
+                Intent intent = new Intent(Ingresar.this, Reg_one_Activity.class);
+                startActivity(intent);
             }
-        };
-        // [END auth_state_listener]
+        });
 
 
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+
+
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
+    protected void onResume() {
+        if (auth.getCurrentUser() != null) {
+            startActivity(new Intent(Ingresar.this, Contratos_Main_Activity.class));
+            finish();
         }
+        super.onResume();
     }
-
-    private void attemptLogin() {
-        String email = login_email.getText().toString().trim();
-        String password = login_password.getText().toString().trim();
-
-        showProgress(true);
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete( Task<AuthResult> task) {
-                        Log.d("TEST", "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        if (!task.isSuccessful()) {
-                            showProgress(false);
-                            Log.w("TEST", "signInWithEmail", task.getException());
-                            Toast.makeText(Ingresar.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        }
-    }
-
 }
+
