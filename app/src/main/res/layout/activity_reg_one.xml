@@ -138,7 +138,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/blanco"
             android:layout_margin="10dp"
-            android:onClick="btn_ingresar_secundario"
             tools:text="@string/cuenta_Act" />
 
     </LinearLayout>

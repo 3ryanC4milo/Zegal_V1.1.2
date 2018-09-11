@@ -8,8 +8,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
 
+    <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,14 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-
         <activity
             android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".MyFirebaseInstanceService">
             <intent-filter>
@@ -40,39 +35,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-<!---->
+            <!--  -->
         </activity>
-
         <activity
             android:name=".Reg_one_Activity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".Ingresar">
-
-        </activity>
-
-        <activity
-            android:name=".Contratos_Main_Activity"
-            android:label="Bienvenido"
-            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
-        </activity>
-
-
-
-
-        <activity
-            android:name=".con_servicios"
-            android:label="Editar Contrato | Servicios"
-            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:parentActivityName=".Contratos_Main_Activity">
-
-
-
-        </activity>
-
+            android:parentActivityName=".Ingresar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".con_alianza" />
         <activity android:name=".Con_software" />
         <activity android:name=".Con_laboral" />
-        <activity android:name=".Forma_Pago"/>
+        <activity android:name=".Forma_Pago" />
+        <activity
+            android:name=".Principal_zegal"
+            android:label="Bienvenido"></activity>
+        <activity
+            android:name=".Contrato_Servicio"
+            ></activity>
     </application>
 
 </manifest>

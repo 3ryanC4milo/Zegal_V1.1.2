@@ -111,7 +111,6 @@
             android:textColor="@color/blanco"
             android:layout_margin="10dp"
             android:layout_below="@id/button_ingresar"
-            android:onClick="btn_Ingresar_Zegal"
             tools:text="@string/title_activity_registro" />
         <ProgressBar
             android:id="@+id/progressBar"

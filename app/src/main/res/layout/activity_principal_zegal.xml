@@ -5,36 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_principal"
-    tools:context=".Contratos_Main_Activity">
-
-    <LinearLayout
-        android:id="@+id/ly_help"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_marginBottom="480dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="290dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.197"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.314">
-
-        <Button
-            android:id="@+id/btn_help"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/info_64"
-            android:layout_gravity="center"
-            android:onClick="botonClick"
-            />
-
-    </LinearLayout>
-
-
+    tools:context=".Principal_zegal">
 
     <TextView
         android:id="@+id/tv_Bienvenido"

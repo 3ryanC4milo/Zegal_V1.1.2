@@ -39,8 +39,6 @@ public class Ingresar extends AppCompatActivity {
     Context mContext;
     private EditText login_email, login_password;
     private Button btn_firebase_login, btn_firebase_registro;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private ProgressBar progressBar;
     private FirebaseAuth auth;
     private ProgressDialog PD;
 
@@ -82,7 +80,7 @@ public class Ingresar extends AppCompatActivity {
                                                     Toast.LENGTH_LONG).show();
                                             Log.v("error", task.getResult().toString());
                                         } else {
-                                            Intent intent = new Intent(Ingresar.this, Contratos_Main_Activity.class);
+                                            Intent intent = new Intent(Ingresar.this, Principal_zegal.class);
                                             startActivity(intent);
                                             finish();
                                         }
@@ -105,7 +103,7 @@ public class Ingresar extends AppCompatActivity {
         btn_firebase_registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Ingresar.this, Reg_one_Activity.class);
+                Intent intent = new Intent(Ingresar.this, Principal_zegal.class);
                 startActivity(intent);
             }
         });
@@ -118,7 +116,7 @@ public class Ingresar extends AppCompatActivity {
     @Override
     protected void onResume() {
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(Ingresar.this, Contratos_Main_Activity.class));
+            startActivity(new Intent(Ingresar.this, Principal_zegal.class));
             finish();
         }
         super.onResume();

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -26,12 +27,10 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 import zegal.ganlen.Config.Config;
 
-public class con_servicios extends AppCompatActivity {
+public class Contrato_Servicio extends AppCompatActivity {
 
     private static final int PAYPAL_REQUEST_CODE = 7171;
     //Esta variable es para jalar la cuenta de prueba para testeo, se requerira cambiar valores despues de las respectivas pruebas
@@ -46,7 +45,7 @@ public class con_servicios extends AppCompatActivity {
     LinearLayout lienzo;
     Button btnEnvia;
     String cantidad ="";
-    String fec;
+    String fec="", seleccion="";
 
 
     @Override
@@ -58,29 +57,57 @@ public class con_servicios extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_con_servicios);
-
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-
+        setContentView(R.layout.activity_contrato__servicio);
         //Iniciar servicio PayPay
 
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
-        startActivity(intent);
+        startService(intent);
+
+       mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+
 
         recibe = findViewById(R.id.et_persona_recibe);
         presta = findViewById(R.id.et_persona_presta);
         finalidad = findViewById(R.id.et_finalidad);
         monto = findViewById(R.id.et_monto);
-        monto.addTextChangedListener(new NumberTextWatcher(monto,"##,###.00"));
+        //monto.addTextChangedListener(new NumberTextWatcher(monto,"#,###.00"));
+        parcial = findViewById(R.id.et_pagos);
 
         spin = findViewById(R.id.sp_pago);
         String[] opcion_pago ={"Seleccione", "Pago único", "Pagos parciales"};
         spin.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opcion_pago));
 
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i)
+                {
+                    case 0:
+                        seleccion = "Seleccione";
+                        parcial.setEnabled(false);
+                        parcial.setText("0");
+                        break;
+                    case 1:
+                        seleccion = "Pago único";
+                        parcial.setEnabled(false);
+                        parcial.setText("0");
+                        break;
+                    case 2:
+                        seleccion = "Pagos parciales";
+                        parcial.setEnabled(true);
+                        break;
+                }
+            }
 
-        parcial = findViewById(R.id.et_pagos);
-        parcial.setEnabled(false);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+
         calendarView = findViewById(R.id.calendarView);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -91,55 +118,41 @@ public class con_servicios extends AppCompatActivity {
         });
         btnEnvia = findViewById(R.id.btn_enviar_main_con);
 
-        if(spin.getSelectedItemPosition() == 2)
-        {
-            parcial.setEnabled(true);
-        }
-        else
-        {
-            parcial.setEnabled(false);
-        }
 
-        btnEnvia.setOnClickListener(new View.OnClickListener() {
+
+
+
+       btnEnvia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String rec = recibe.getText().toString();
                 String pre = presta.getText().toString();
                 String fin = finalidad.getText().toString();
                 double mon = Double.parseDouble(monto.getText().toString());
-                String opc = spin.getSelectedItem().toString();
+                String opc = seleccion;
+                int par = Integer.parseInt(parcial.getText().toString());
                 String date = fec;
 
 
-                if (rec.isEmpty() || pre.isEmpty() || fin.isEmpty() || opc.equals("Seleccione")  || fec.isEmpty())
+                if (rec.isEmpty() || pre.isEmpty() || fin.isEmpty() || opc.equals("Seleccione") || parcial == null)
                 {
                     Toast.makeText(getApplicationContext(),
                             "Debes de llenar todos los campos",
                             Toast.LENGTH_LONG).show();
                 }
                 else {
-                    CargaDatosServicios(rec, pre, fin, mon, opc, date);
+                    CargaDatosServicios(rec, pre, fin, mon, opc, par, date);
+
                     procesarDatos();
                     //finish();
                 }
             }
         });
-
     }
 
-    private void CargaDatosServicios(String rec, String pre, String fin, double mon, String opc, String date) {
+    private void CargaDatosServicios(String rec, String pre, String fin, double mon, String opc, int par, String date) {
         Servicio servicio;
-        int par=0;
         String id = mDatabaseReference.push().getKey();
-
-        if(opc.equals("Pago único"))
-        {
-            par = 0;
-        }
-        else if (opc.equals("Pagos parciales"))
-        {
-            par = Integer.parseInt(parcial.getText().toString());
-        }
 
         servicio = new Servicio(rec, pre, fin, mon, opc, par, date);
         mDatabaseReference.child("Contrato_Servicio").child(id).setValue(servicio);
@@ -148,7 +161,7 @@ public class con_servicios extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
     }
 
-    private void procesarDatos() {
+   private void procesarDatos() {
 
         //Revibe el monto del edittext
         cantidad = monto.getText().toString();
@@ -179,9 +192,9 @@ public class con_servicios extends AppCompatActivity {
                     try {
                         String paymentDetalle = confirmation.toJSONObject().toString(4);
                         startActivity(new Intent(this,Forma_Pago.class).putExtra("Nombre",recibe.getText().toString())
-                        .putExtra("Concepto", "Contrato de Servicios")
-                        .putExtra("Monto", cantidad)
-                        .putExtra("Estado", paymentDetalle));
+                                .putExtra("Concepto", "Contrato de Servicios")
+                                .putExtra("Monto", cantidad)
+                                .putExtra("Estado", paymentDetalle));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
