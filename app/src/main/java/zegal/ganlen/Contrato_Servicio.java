@@ -192,9 +192,10 @@ public class Contrato_Servicio extends AppCompatActivity {
                     try {
                         String paymentDetalle = confirmation.toJSONObject().toString(4);
                         startActivity(new Intent(this,Forma_Pago.class).putExtra("Nombre",recibe.getText().toString())
-                                .putExtra("Concepto", "Contrato de Servicios")
-                                .putExtra("Monto", cantidad)
-                                .putExtra("Estado", paymentDetalle));
+                                        .putExtra("Concepto", "Contrato de Servicios")
+                                        .putExtra("Detalle", paymentDetalle)
+                                        .putExtra("PaymentAmount", cantidad)
+                                );
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

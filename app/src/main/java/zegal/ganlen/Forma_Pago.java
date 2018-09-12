@@ -30,9 +30,11 @@ public class Forma_Pago extends AppCompatActivity {
 
             //Recibe los datos del activity anterior
         Intent intent = getIntent();
+        txtcliente.setText("Cliente: "+intent.getStringExtra("Nombre"));
+        txtconc.setText("Concepto de pago: "+intent.getStringExtra("Concepto"));
         try {
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("Estado"));
-            verTodo(jsonObject.getJSONObject("response"),intent.getStringExtra("Monto"));
+            JSONObject jsonObject = new JSONObject(intent.getStringExtra("Detalle"));
+            verTodo(jsonObject.getJSONObject("response"),intent.getStringExtra("PaymentAmount"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -43,13 +45,12 @@ public class Forma_Pago extends AppCompatActivity {
     }
 
     //Funcion que manda los elementos del json a los  textview
-    private void verTodo(JSONObject response, String monto) {
+    private void verTodo(JSONObject response, String paymentAmount) {
         try {
-            txttrans.setText(response.getString("id"));
-            txtcliente.setText(response.getString("name"));
-            txtconc.setText(response.getString("conc"));
-            txtmon.setText(response.getString(monto));
-            txtstat.setText(response.getString("state"));
+            txttrans.setText("Transacción PayPal: \n"+response.getString("id"));
+            txtstat.setText("Status de la transacción: "+response.getString("state"));
+            txtmon.setText(response.getString("Total: "+String.format("$"+paymentAmount)));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
