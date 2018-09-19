@@ -139,35 +139,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:orientation="vertical"
-                android:layout_marginBottom="200dp">
-
-                <ImageView
-                    android:id="@+id/ivINEfront"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    />
-
-                <ImageView
-                    android:id="@+id/ivINEback"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:contentDescription="TODO" />
-
-                <LinearLayout
-                    android:id="@+id/ly_lienzo"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:orientation="vertical"
-                    >
-
-                </LinearLayout>
-
-            </LinearLayout>
-
             <Button
                 android:id="@+id/btn_enviar_main_con"
                 android:layout_width="match_parent"

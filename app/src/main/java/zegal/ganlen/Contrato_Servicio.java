@@ -41,8 +41,6 @@ public class Contrato_Servicio extends AppCompatActivity {
     Spinner spin;
     CalendarView calendarView;
     DatabaseReference mDatabaseReference;
-    ImageView image1, image2;
-    LinearLayout lienzo;
     Button btnEnvia;
     String cantidad ="";
     String fec="", seleccion="";
@@ -142,7 +140,6 @@ public class Contrato_Servicio extends AppCompatActivity {
                 }
                 else {
                     CargaDatosServicios(rec, pre, fin, mon, opc, par, date);
-
                     procesarDatos();
                     //finish();
                 }
@@ -191,10 +188,10 @@ public class Contrato_Servicio extends AppCompatActivity {
                 {
                     try {
                         String paymentDetalle = confirmation.toJSONObject().toString(4);
-                        startActivity(new Intent(this,Forma_Pago.class).putExtra("Nombre",recibe.getText().toString())
-                                        .putExtra("Concepto", "Contrato de Servicios")
-                                        .putExtra("Detalle", paymentDetalle)
+                        startActivity(new Intent(this,Forma_Pago.class).putExtra("Detalle", paymentDetalle)
                                         .putExtra("PaymentAmount", cantidad)
+                                        .putExtra("Nombre",recibe.getText().toString())
+                                        .putExtra("Concepto", "Contrato de Servicios")
                                 );
                     } catch (JSONException e) {
                         e.printStackTrace();

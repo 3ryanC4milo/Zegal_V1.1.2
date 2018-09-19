@@ -3,6 +3,7 @@ package zegal.ganlen;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,6 +29,16 @@ public class Forma_Pago extends AppCompatActivity {
         txtmon = findViewById(R.id.tvMonto);
         txtstat = findViewById(R.id.tvStatus);
 
+        btnfin = findViewById(R.id.btnSalirDetalle);
+
+        btnfin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Forma_Pago.this, Identificacion.class));
+                finish();
+            }
+        });
+
             //Recibe los datos del activity anterior
         Intent intent = getIntent();
         txtcliente.setText("Cliente: "+intent.getStringExtra("Nombre"));
@@ -39,9 +50,7 @@ public class Forma_Pago extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //Referencias a subir credenciales
 
-        //Referencias a la firma
     }
 
     //Funcion que manda los elementos del json a los  textview

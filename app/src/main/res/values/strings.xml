@@ -80,5 +80,11 @@
 
 
     <!-- Strings Contrato servicios-->
-    <string name="btn_terminar">Terminar</string>
+    <string name="btn_terminar">Siguiente</string>
+
+    <!-- Strings Identificaciones-->
+    <string name="agregarfoto">Escanear identificación</string>
+    <string name="btn_contrato">Generar contrato</string>
+    <string name="btn_firma">Plasmar firma</string>
+
 </resources>
