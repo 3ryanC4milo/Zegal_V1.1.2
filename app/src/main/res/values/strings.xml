@@ -81,6 +81,7 @@
 
     <!-- Strings Contrato servicios-->
     <string name="btn_terminar">Siguiente</string>
+    <string name="btn_terminar1">Finalizar</string>
 
     <!-- Strings Identificaciones-->
     <string name="agregarfoto">Escanear identificación</string>

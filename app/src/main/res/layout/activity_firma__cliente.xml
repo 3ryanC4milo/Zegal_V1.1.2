@@ -17,13 +17,140 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imgFirma"
-                android:layout_width="180dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="290dp"
-                android:layout_marginLeft="110dp"
-                android:src="@android:color/transparent" />
+            <TextView
+                android:id="@+id/lbl1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/lbl2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/lbl3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/lbl4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/lbl5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/lbl6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/lbl7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/lbl8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/lbl9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/lbl10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/lbl11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:id="@+id/lblAbt"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/lblClit"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="235dp"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <ImageView
+                    android:id="@+id/imgFirmaP"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@android:color/transparent" />
+
+                <ImageView
+                    android:id="@+id/imgFirma"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:src="@android:color/transparent" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:id="@+id/lblAb"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/lblCli"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="235dp"/>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnFinal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_terminar1"/>
 
         </LinearLayout>
 

@@ -23,7 +23,13 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service android:name=".MyFirebaseInstanceService">
             <intent-filter>
@@ -50,11 +56,7 @@
             android:label="Bienvenido" />
         <activity android:name=".Contrato_Servicio" />
         <activity android:name=".Identificacion">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Firma_Cliente" />
         <activity android:name=".Signature">

@@ -45,6 +45,9 @@ public class Contrato_Servicio extends AppCompatActivity {
     String cantidad ="";
     String fec="", seleccion="";
 
+    String [] mes = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto",
+            "septiembre", "octubre", "noviembre", "diciembre"};
+
 
     @Override
     protected void onDestroy() {
@@ -94,6 +97,7 @@ public class Contrato_Servicio extends AppCompatActivity {
                     case 2:
                         seleccion = "Pagos parciales";
                         parcial.setEnabled(true);
+                        parcial.setText("");
                         break;
                 }
             }
@@ -111,7 +115,10 @@ public class Contrato_Servicio extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-                fec = i2+"/"+"0"+(i1+1)+"/"+i;
+                if(i1 < mes.length)
+                {
+                    fec = i2+" de "+mes[(i1)]+" de "+i;
+                }
             }
         });
         btnEnvia = findViewById(R.id.btn_enviar_main_con);
@@ -189,7 +196,7 @@ public class Contrato_Servicio extends AppCompatActivity {
                     try {
                         String paymentDetalle = confirmation.toJSONObject().toString(4);
                         startActivity(new Intent(this,Forma_Pago.class).putExtra("Detalle", paymentDetalle)
-                                        .putExtra("PaymentAmount", cantidad)
+                                        .putExtra("PaymentAmount", monto.getText().toString())
                                         .putExtra("Nombre",recibe.getText().toString())
                                         .putExtra("Concepto", "Contrato de Servicios")
                                 );

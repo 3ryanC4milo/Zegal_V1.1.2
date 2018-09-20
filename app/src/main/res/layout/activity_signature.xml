@@ -7,37 +7,47 @@
     android:orientation="vertical"
     tools:context=".Signature">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
         >
 
         <Button
             android:id="@+id/btnCancela"
-            android:layout_width="130dp"
-            android:layout_height="60dp"
-            android:text="Cancelar"/>
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="Cancelar"
+            android:textAlignment="center"/>
+
         <Button
             android:id="@+id/btnBorrarF"
-            android:layout_width="130dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="130dp"
-            android:text="Limpiar"/>
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="Limpiar"
+            android:textAlignment="center"/>
 
         <Button
             android:id="@+id/btngetSign"
-            android:layout_width="130dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="260dp"
-            android:text="Capturar Firma"/>
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="Capturar"
+            android:textAlignment="center"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ly_Canvas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"/>
+        android:orientation="vertical"/>
 
 
 </LinearLayout>
