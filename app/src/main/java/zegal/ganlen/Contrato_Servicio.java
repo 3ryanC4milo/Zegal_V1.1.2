@@ -155,14 +155,14 @@ public class Contrato_Servicio extends AppCompatActivity {
                             .putExtra("tipoPago", opc)
                             .putExtra("parcial", par)
                             .putExtra("fecPago", date));
-                    Toast.makeText(Contrato_Servicio.this,
+                    /*Toast.makeText(Contrato_Servicio.this,
                             "Bienvenido "+mail +
                             "\nRecibe servicio :"+rec+
                                 "\nPresta el servicio: "+pre+
                                 "\nFinalidad: "+fin+
                                 "\nFacilidad: "+opc+
                                 "\nPagos a realizar: "+par+
-                                "\nPrimer pago: "+date, Toast.LENGTH_LONG).show();
+                                "\nPrimer pago: "+date, Toast.LENGTH_LONG).show();*/
                 }
             }
         });

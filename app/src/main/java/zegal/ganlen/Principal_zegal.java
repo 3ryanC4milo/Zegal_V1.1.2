@@ -30,7 +30,7 @@ public class Principal_zegal extends AppCompatActivity {
             case R.id.btn_servicios:
                 String mail = getIntent().getStringExtra("mail");
                 startActivity(new Intent(Principal_zegal.this,Contrato_Servicio.class).putExtra("mail",mail));
-                Toast.makeText(this, "Bienvenido "+ mail, Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Bienvenido "+ mail, Toast.LENGTH_LONG).show();
                 break;
         }
     }

@@ -435,6 +435,7 @@ public class Identificacion extends AppCompatActivity {
                                 .putExtra("facilidad",  getIntent().getStringExtra("tipoPago"))
                                 .putExtra("primer",  getIntent().getStringExtra("fecPago"))
                         );
+                        Toast.makeText(this, "Su transacción se relizó de manera exitosa.", Toast.LENGTH_LONG).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -512,17 +513,5 @@ public class Identificacion extends AppCompatActivity {
         startActivityForResult(intent,PAYPAL_REQUEST_CODE);
 
     }
-
-    /*private void CargaDatosServicios(String rec, String pre, String fin, double mon, String opc, int par, String date) {
-        Servicio servicio;
-        String id = mDatabaseReference.push().getKey();
-
-        servicio = new Servicio(rec, pre, fin, mon, opc, par, date);
-        mDatabaseReference.child("Contrato_Servicio").child(id).setValue(servicio);
-        Toast.makeText(getApplicationContext(),
-                "Datos capturados exitosamente",
-                Toast.LENGTH_LONG).show();
-    }*/
-
 
 }

@@ -83,7 +83,7 @@ public class Ingresar extends AppCompatActivity {
                                             Intent intent = new Intent(Ingresar.this, Principal_zegal.class);
                                             intent.putExtra("mail",email);
                                             startActivity(intent);
-                                            Toast.makeText(Ingresar.this, "Bienvenido "+ email, Toast.LENGTH_LONG).show();
+                                            //Toast.makeText(Ingresar.this, "Bienvenido "+ email, Toast.LENGTH_LONG).show();
                                         }
                                         PD.dismiss();
                                     }
@@ -120,7 +120,7 @@ public class Ingresar extends AppCompatActivity {
         if (auth.getCurrentUser() != null) {
             String mail = auth.getCurrentUser().getEmail();
             startActivity(new Intent(Ingresar.this, Principal_zegal.class).putExtra("mail", mail));
-            Toast.makeText(this, "Bienvenido "+ mail, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Bienvenido "+ mail, Toast.LENGTH_LONG).show();
             finish();
 
         }
