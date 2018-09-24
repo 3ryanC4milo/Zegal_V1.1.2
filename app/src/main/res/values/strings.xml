@@ -51,16 +51,17 @@
     <string name="I_Bienvenida">Feliz por verte otra vez</string>
 
     <!--TXT Ayuda com la aplicación-->
-    <string name="tit1">TIPS</string>
-    <string name="desc1">Encuentra un lugar asombroso para comer o entretenerte cerca de tu
-        universidad con las mejores promociones y precios.</string>
+    <string name="tit1">Servicios</string>
+    <string name="desc1">Agilizará el proceso de contratar el servicio entre dos personas.</string>
 
-    <string name="tit2">¿PERDIDO? CON SCOOL ESTO NUNCA PASARÁ</string>
-    <string name="desc2">Utilizamos tu ubicación y te decimos toda la información
-        referente a tu campus.</string>
+    <string name="tit2">Licencia de Software</string>
+    <string name="desc2">Proximamente</string>
 
-    <string name="tit3">TE ENCATARÁN NUESTRAS RECOMENDACIONES</string>
-    <string name="desc3">Podrás recibir las mejores recomendaciones de la caracola mágica.</string>
+    <string name="tit3">Laboral</string>
+    <string name="desc3">Proximamente</string>
+
+    <string name="tit4">Alianzas</string>
+    <string name="desc4">Proximamente</string>
 
     <string name="omite">Omitir</string>
 
@@ -84,8 +85,15 @@
     <string name="btn_terminar1">Finalizar</string>
 
     <!-- Strings Identificaciones-->
+
+    <string name="txt_recibe2">Identificaciones de la persona que recibe el servicio.</string>
+    <string name="txt_presta2">Identificaciones de la persona que presta el servicio</string>
     <string name="agregarfoto">Escanear identificación</string>
     <string name="btn_contrato">Generar contrato</string>
     <string name="btn_firma">Plasmar firma</string>
+
+    <!-- Strings forma pago o confirmación de compra-->
+    <string name="conf">Gracias por contar con Zegal. En un plazo de 12 horas recibiras tu contrato</string>
+    <string name="boton">MENÚ PRINCIPAL</string>
 
 </resources>

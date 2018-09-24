@@ -87,21 +87,6 @@
                 android:inputType="textMultiLine" />
 
             <TextView
-                android:id="@+id/tv_six"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_monto"
-                android:textColor="@android:color/black" />
-
-            <EditText
-                android:id="@+id/et_monto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:hint="$0.00"/>
-
-            <TextView
                 android:id="@+id/tv_nine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -138,6 +123,8 @@
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+
 
             <Button
                 android:id="@+id/btn_enviar_main_con"

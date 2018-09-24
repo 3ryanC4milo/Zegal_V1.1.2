@@ -10,15 +10,15 @@
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/c_servicios"
+        android:src="@drawable/c_alizanza"
         android:layout_marginTop="35dp"
         android:layout_marginLeft="50dp"
-        android:id="@+id/imageView1" />
+        android:id="@+id/imageView4" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tit1"
+        android:text="@string/tit4"
         android:textSize="32sp"
         android:layout_marginTop="250dp"
         android:layout_marginLeft="20dp"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="300dp"
-        android:text="@string/desc1"
+        android:text="@string/desc4"
         android:textAlignment="gravity"
         android:textColor="@color/azul_pred"
         android:textSize="18sp" />

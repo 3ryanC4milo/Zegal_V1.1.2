@@ -146,8 +146,10 @@ public class Reg_one_Activity extends AppCompatActivity implements View.OnClickL
                                     progressBar.setVisibility(View.GONE);
                                     if (task.isSuccessful()) {
                                         Toast.makeText(Reg_one_Activity.this, getString(R.string.registration_success), Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(Reg_one_Activity.this, Ingresar.class);
+                                        Intent intent = new Intent(Reg_one_Activity.this, WelcomeActivity.class);
+                                        intent.putExtra("mail", nombre);
                                         startActivity(intent);
+                                        finish();
                                     } else {
                                         Toast.makeText(Reg_one_Activity.this, getString(R.string.registration_fail), Toast.LENGTH_LONG).show();
                                     }

@@ -11,8 +11,8 @@
         android:layout_width="300dp"
         android:layout_height="450dp"
         android:id="@+id/viewPager"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="43dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="30dp"
         android:background="@color/blanco"/>
 
     <LinearLayout

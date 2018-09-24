@@ -81,8 +81,9 @@ public class Ingresar extends AppCompatActivity {
                                             Log.v("error", task.getResult().toString());
                                         } else {
                                             Intent intent = new Intent(Ingresar.this, Principal_zegal.class);
+                                            intent.putExtra("mail",email);
                                             startActivity(intent);
-                                            finish();
+                                            Toast.makeText(Ingresar.this, "Bienvenido "+ email, Toast.LENGTH_LONG).show();
                                         }
                                         PD.dismiss();
                                     }
@@ -103,8 +104,9 @@ public class Ingresar extends AppCompatActivity {
         btn_firebase_registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Ingresar.this, Principal_zegal.class);
+                Intent intent = new Intent(Ingresar.this, Reg_one_Activity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -116,8 +118,11 @@ public class Ingresar extends AppCompatActivity {
     @Override
     protected void onResume() {
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(Ingresar.this, Principal_zegal.class));
+            String mail = auth.getCurrentUser().getEmail();
+            startActivity(new Intent(Ingresar.this, Principal_zegal.class).putExtra("mail", mail));
+            Toast.makeText(this, "Bienvenido "+ mail, Toast.LENGTH_LONG).show();
             finish();
+
         }
         super.onResume();
     }

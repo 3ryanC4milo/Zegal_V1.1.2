@@ -22,9 +22,6 @@ public class Firma_Cliente extends AppCompatActivity {
 
     String p1 = "",p2= "",p3= "",p4= "",p5= "",p6= "",p7= "",p8= "",p9= "",p10= "",p11= "";
 
-    String num , ab, cli;
-
-
     ImageView getfirmaCli, getfirmaAb;
 
     @Override
@@ -53,22 +50,17 @@ public class Firma_Cliente extends AppCompatActivity {
         t11 = findViewById(R.id.lbl11);
         out = findViewById(R.id.btnFinal);
 
-        Intent intent = getIntent();
 
-        ab = intent.getStringExtra("Prestatario");
-        cli = intent.getStringExtra("Prestador");
-        num = intent.getStringExtra("monto");
-
-        p1 = "CONTRATO DE PRESTACIÓN DE SERVICIOS QUE SUSCRIBEN "+ ab
-                + " (EN ADELANTE EL PRESTADOR) Y "+ cli +" (EN ADELANTE EL CLIENTE) CONFORME A LAS SIGUIENTES CLÁUSULAS: ";
+        p1 = "CONTRATO DE PRESTACIÓN DE SERVICIOS QUE SUSCRIBEN "+ getIntent().getStringExtra("prestador")
+                + " (EN ADELANTE EL PRESTADOR) Y "+ getIntent().getStringExtra("recibe") +" (EN ADELANTE EL CLIENTE) CONFORME A LAS SIGUIENTES CLÁUSULAS: ";
 
         p2 ="CLÁUSULAS";
 
-        p3 = "PRIMERA. OBJETO. El objeto del contrato es la prestación de los siguientes servicios por el Prestador al Cliente: \n"+ intent.getStringExtra("finalidad");
+        p3 = "PRIMERA. OBJETO. El objeto del contrato es la prestación de los siguientes servicios por el Prestador al Cliente: \n"+ getIntent().getStringExtra("finalidad");
 
         p4 = "SEGUNDA. CONTRAPRESTACIÓN. Por la prestación de los servicios el Cliente pagará al Prestador la can-tidad de $"
-            +num + ".00 ("+MontoLetra.cantidadConLetra(num)+" pesos) M.N. más IVA/ misma que será pagadera contra entrega de los servicios correspondientes. " +
-                "/ misma que será pagadera mediante "+ intent.getStringExtra("pagos") +" pagos de forma mensual, iniciando el "+intent.getStringExtra("primer") +"." +
+            +getIntent().getStringExtra("PaymentAmount") + ".00 ("+MontoLetra.cantidadConLetra(getIntent().getStringExtra("PaymentAmount"))+" pesos) M.N. más IVA/ misma que será pagadera contra entrega de los servicios correspondientes. " +
+                "/ misma que será pagadera mediante un solo pago que deberá ser cubierto el "+getIntent().getStringExtra("primer") +"." +
                 "\n La cantidad(es) señalada(s) en esta cláusula podrá ser cubierta(s) en cualquier forma de pago.";
 
         p5 = "TERCERA. VIGENCIA. El plazo del contrato será indefinido, por la naturaleza de los servicios prestados.\n" +
@@ -93,7 +85,7 @@ public class Firma_Cliente extends AppCompatActivity {
         p11 = "NOVENA. LEYES Y TRIBUNALES. Para la interpretación y cumplimiento del presente contrato el mismo se regirá por las leyes aplicables en la Ciudad de México y en caso de controversia las partes se someten a los tribunales competentes de la Ciudad de México, " +
                 "renunciando a cualquier otro fuero por razón de sus domicilios presentes o futuros o por cualquier otra circunstancia. \n" +
                 "El presente contrato se firma libre de dolo, error, mala fe o cualquier otro vicio que pueda afectar el con-sentimiento de las partes, en la Ciudad de México a los "+
-                intent.getStringExtra("day")+" DEL MES DE "+intent.getStringExtra("month")+" DEL AÑO "+intent.getStringExtra("year")+".";
+                getIntent().getStringExtra("dia")+" DÍAS DEL MES DE "+getIntent().getStringExtra("mes")+" DEL AÑO "+getIntent().getStringExtra("anio")+".";
 
         t1.setText(p1);
         t2.setText(p2);
@@ -114,8 +106,8 @@ public class Firma_Cliente extends AppCompatActivity {
         Bitmap bmp2 = bu.getParcelable("btmp");
         getfirmaCli.setImageBitmap(bmp2);
 
-        t14.setText(ab);
-        t15.setText(cli);
+        t14.setText(getIntent().getStringExtra("prestador"));
+        t15.setText(getIntent().getStringExtra("recive"));
 
 
         out.setOnClickListener(new View.OnClickListener() {

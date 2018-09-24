@@ -12,7 +12,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
     <application
         android:allowBackup="true"
@@ -23,13 +26,7 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service android:name=".MyFirebaseInstanceService">
             <intent-filter>
@@ -40,7 +37,11 @@
         <activity
             android:name=".Ingresar"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             <!--  -->
         </activity>
         <activity
@@ -53,15 +54,15 @@
         <activity android:name=".Forma_Pago" />
         <activity
             android:name=".Principal_zegal"
-            android:label="Bienvenido" />
+            android:label="Bienvenido">
+
+        </activity>
         <activity android:name=".Contrato_Servicio" />
         <activity android:name=".Identificacion">
 
         </activity>
         <activity android:name=".Firma_Cliente" />
-        <activity android:name=".Signature">
-
-        </activity>
+        <activity android:name=".Signature"></activity>
     </application>
 
 </manifest>

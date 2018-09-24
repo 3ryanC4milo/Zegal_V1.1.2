@@ -68,9 +68,7 @@ public class Signature extends AppCompatActivity {
         if (!file.exists()) {
             file.mkdir();
         }
-        if(file.exists()) {
-            StoredPath = DIRECTORY + pic_name + ".png";
-        }
+
     }
     Button.OnClickListener onButtonClick = new Button.OnClickListener() {
         @Override

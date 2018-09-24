@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class Principal_zegal extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,16 +19,18 @@ public class Principal_zegal extends AppCompatActivity {
         switch (view.getId())
         {
             case R.id.btn_alianza:
-                startActivity(new Intent(Principal_zegal.this,con_alianza.class));
+                Toast.makeText(this, "Proximamente", Toast.LENGTH_LONG).show();
                 break;
             case R.id.btn_laboral:
-                startActivity(new Intent(Principal_zegal.this,Con_laboral.class));
+                Toast.makeText(this, "Proximamente", Toast.LENGTH_LONG).show();
                 break;
             case R.id.btn_software:
-                startActivity(new Intent(Principal_zegal.this,Con_software.class));
+                Toast.makeText(this, "Proximamente", Toast.LENGTH_LONG).show();
                 break;
             case R.id.btn_servicios:
-                startActivity(new Intent(Principal_zegal.this,Contrato_Servicio.class));
+                String mail = getIntent().getStringExtra("mail");
+                startActivity(new Intent(Principal_zegal.this,Contrato_Servicio.class).putExtra("mail",mail));
+                Toast.makeText(this, "Bienvenido "+ mail, Toast.LENGTH_LONG).show();
                 break;
         }
     }

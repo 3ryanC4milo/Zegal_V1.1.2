@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 public class WelcomeActivity extends AppCompatActivity {
 
     private ViewPager mPager;
-    private int[] layouts = {R.layout.help_slide1, R.layout.help_slide2, R.layout.help_slide3};
+    private int[] layouts = {R.layout.help_slide1, R.layout.help_slide2, R.layout.help_slide3, R.layout.help_slide4};
     private MpagerAdapter mpagerAdapter;
     private LinearLayout Dots_Layout;
     private ImageView[] dots;
@@ -109,7 +109,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void loadHome()
     {
-        startActivity(new Intent(WelcomeActivity.this,Ingresar.class));
+        String mail = getIntent().getStringExtra("mail");
+        startActivity(new Intent(WelcomeActivity.this,Principal_zegal.class)
+        .putExtra("mail", mail));
         finish();
     }
 }
