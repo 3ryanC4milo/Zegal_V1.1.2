@@ -39,6 +39,7 @@
     <string name="CTR_3">Servicios
     </string>
     <string name="CTR_4">Alianzas</string>
+    <string name="CTR_5">Cerrar Sesión</string>
     <string name="TXT_CTR">¿Qué contrato necesitas?</string>
 
     <!-- TXT Registro-->
@@ -82,6 +83,8 @@
 
     <!-- Strings Contrato servicios-->
     <string name="btn_terminar">Siguiente</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="btn_return">Regresar</string>
     <string name="btn_terminar1">Finalizar</string>
 
     <!-- Strings Identificaciones-->
@@ -89,6 +92,7 @@
     <string name="txt_recibe2">Identificaciones de la persona que recibe el servicio.</string>
     <string name="txt_presta2">Identificaciones de la persona que presta el servicio</string>
     <string name="agregarfoto">Escanear identificación</string>
+    <string name="btn_conf">Confirmar Solicitud</string>
     <string name="btn_contrato">Generar contrato</string>
     <string name="btn_firma">Plasmar firma</string>
 

@@ -39,7 +39,7 @@ public class Contrato_Servicio extends AppCompatActivity {
     TextView v;
     Spinner spin;
     CalendarView calendarView;
-    Button btnEnvia;
+    Button btnEnvia, canc;
     String fec="", seleccion="";
     GregorianCalendar aux = new GregorianCalendar();
 
@@ -51,15 +51,11 @@ public class Contrato_Servicio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contrato__servicio);
 
-
-        v = findViewById(R.id.tv_seven);
         recibe = findViewById(R.id.et_persona_recibe);
         presta = findViewById(R.id.et_persona_presta);
         finalidad = findViewById(R.id.et_finalidad);
         parcial = findViewById(R.id.et_pagos);
-        parcial.setEnabled(false);
-        parcial.setVisibility(View.INVISIBLE);
-        v.setVisibility(View.INVISIBLE);
+
 
         spin = findViewById(R.id.sp_pago);
         String[] opcion_pago ={"Seleccione", "Pago único", "Pagos parciales"};
@@ -72,21 +68,16 @@ public class Contrato_Servicio extends AppCompatActivity {
                 {
                     case 0:
                         seleccion = "Seleccione";
-                        v.setVisibility(View.INVISIBLE);
                         parcial.setEnabled(false);
-                        parcial.setVisibility(View.INVISIBLE);
+                        parcial.setText("0");
                         break;
                     case 1:
                         seleccion = "Pago único";
-                        v.setVisibility(View.VISIBLE);
-                        parcial.setVisibility(View.VISIBLE);
                         parcial.setEnabled(false);
                         parcial.setText("0");
                         break;
                     case 2:
                         seleccion = "Pagos parciales";
-                        v.setVisibility(View.VISIBLE);
-                        parcial.setVisibility(View.VISIBLE);
                         parcial.setEnabled(true);
                         parcial.setText("");
                         break;
@@ -105,6 +96,7 @@ public class Contrato_Servicio extends AppCompatActivity {
 
         calendarView = findViewById(R.id.calendarView);
         btnEnvia = findViewById(R.id.btn_enviar_main_con);
+        canc = findViewById(R.id.btn_cancelar);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -148,7 +140,7 @@ public class Contrato_Servicio extends AppCompatActivity {
                 else
                 {
                     startActivity(new Intent(Contrato_Servicio.this, Identificacion.class)
-                            .putExtra("mail", mail)
+                            //.putExtra("mail", mail)
                             .putExtra("recibe", rec)
                             .putExtra("prestador", pre)
                             .putExtra("finalidad", fin)
@@ -166,5 +158,13 @@ public class Contrato_Servicio extends AppCompatActivity {
                 }
             }
         });
+
+       canc.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               startActivity(new Intent(Contrato_Servicio.this, Principal_zegal.class));
+               finish();
+           }
+       });
     }
 }

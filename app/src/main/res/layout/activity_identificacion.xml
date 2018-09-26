@@ -10,9 +10,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
 
-            <RelativeLayout
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -23,99 +26,139 @@
                 android:paddingStart="30dip"
                 android:visibility="visible">
 
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_recibe2"/>
 
-                <ImageButton
-                    android:id="@+id/ibtAddFront"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="220dp"
-                    android:layout_marginVertical="70dp"
-                    android:background="@drawable/ic_action_agregar"
-                    android:onClick="clickear"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2">
 
-                <ImageView
-                    android:id="@+id/imvIneFront"
-                    android:layout_width="180dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@android:color/transparent"/>
+                    <ImageView
+                        android:id="@+id/imvIneFront"
+                        android:layout_width="180dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:src="@android:color/transparent"/>
 
+                    <ImageButton
+                        android:id="@+id/ibtAddFront"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/ic_action_agregar"
+                        android:onClick="clickear"/>
 
-                <ImageButton
-                    android:id="@+id/ibtAddBack"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="220dp"
-                    android:layout_marginVertical="190dp"
-                    android:background="@drawable/ic_action_agregar"
-                    android:onClick="clickear"/>
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imvIneBack"
-                    android:layout_width="180dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="170dp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@android:color/transparent"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2">
+
+                    <ImageView
+                        android:id="@+id/imvIneBack"
+                        android:layout_width="180dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:src="@android:color/transparent"/>
+
+                    <ImageButton
+                        android:id="@+id/ibtAddBack"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/ic_action_agregar"
+                        android:onClick="clickear"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="290dp"
                     android:text="@string/txt_presta2"/>
 
-                <ImageButton
-                    android:id="@+id/ibtAddFront2"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="220dp"
-                    android:layout_marginVertical="370dp"
-                    android:background="@drawable/ic_action_agregar"
-                    android:onClick="clickear"/>
-
-                <ImageView
-                    android:id="@+id/imvIneBack2"
-                    android:layout_width="180dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="350dp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@android:color/transparent"/>
-
-                <ImageButton
-                    android:id="@+id/ibtAddBack2"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="220dp"
-                    android:layout_marginVertical="490dp"
-                    android:background="@drawable/ic_action_agregar"
-                    android:onClick="clickear"/>
-
-                <ImageView
-                    android:id="@+id/imvIneFront2"
-                    android:layout_width="180dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="470dp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@android:color/transparent"/>
-
-
-
-                <Button
-                    android:id="@+id/btnContrato"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="590dp"
-                    android:text="@string/btn_contrato"
-                    />
+                    android:weightSum="2">
+
+                    <ImageView
+                        android:id="@+id/imvIneFront2"
+                        android:layout_width="180dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:src="@android:color/transparent"/>
+
+                    <ImageButton
+                        android:id="@+id/ibtAddFront2"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/ic_action_agregar"
+                        android:onClick="clickear"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2">
+
+                    <ImageView
+                        android:id="@+id/imvIneBack2"
+                        android:layout_width="180dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:src="@android:color/transparent"/>
+
+                    <ImageButton
+                        android:id="@+id/ibtAddBack2"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/ic_action_agregar"
+                        android:onClick="clickear"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_return"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorAccent"
+                        android:text="@string/btn_return"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:textColor="@android:color/background_light" />
+
+                    <Button
+                        android:id="@+id/btnContrato"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorAccent"
+                        android:text="@string/btn_conf"
+                        android:textColor="@android:color/background_light" />
+
+                </LinearLayout>
 
 
-            </RelativeLayout>
 
+            </LinearLayout>
     </ScrollView>
 
 

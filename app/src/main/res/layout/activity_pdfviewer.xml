@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PDFViewerActivity"
+    android:background="@color/gradient_azul">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/blanco"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingEnd="26dip"
+            android:paddingStart="30dip"
+            android:visibility="visible">
+
+            <com.github.barteksc.pdfviewer.PDFView
+                android:id="@+id/pdfViewer"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+            <Button
+                android:id="@+id/btn_Fin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/azul_pred"
+                android:textColor="@color/blanco"
+                android:text="@string/btn_terminar1"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

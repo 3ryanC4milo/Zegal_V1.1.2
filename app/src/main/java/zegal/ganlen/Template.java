@@ -1,6 +1,7 @@
 package zegal.ganlen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Environment;
 import android.util.Log;
@@ -59,7 +60,7 @@ public class Template {
         if(!folder.exists())
             folder.mkdir();
 
-        pdfFile = new File(folder,"servicios_"+pic_name+".pdf");
+        pdfFile = new File(folder,"contrato_de_servicios_"+pic_name+".pdf");
     }
 
     public void cierraPDF()
@@ -161,6 +162,41 @@ public class Template {
         }
     }
 
+    public void TerminarFirmero(String []header)
+    {
+        try
+        {
+            parrafo = new Paragraph();
+            parrafo.setFont(fTexto);
+            PdfPTable pdfPTable = new PdfPTable(header.length);
+            pdfPTable.setWidthPercentage(100);
+            PdfPCell pdfPCell;
+            int indC =0;
+            while (indC<header.length)
+            {
+                pdfPCell = new PdfPCell(new Phrase(header[indC++], fTexto));
+                pdfPCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                pdfPCell.setBorderColorTop(BaseColor.BLACK);
+                pdfPCell.setBorderColorLeft(BaseColor.WHITE);
+                pdfPCell.setBorderColorBottom(BaseColor.WHITE);
+                pdfPCell.setBorderColorRight(BaseColor.WHITE);
+                pdfPCell.setBackgroundColor(BaseColor.WHITE);
 
+            }
+            parrafo.add(pdfPTable);
+            documento.add(parrafo);
+
+        } catch (Exception e)
+        {
+            Log.e("TerminarFirmero", e.toString());
+        }
+    }
+
+    public void verPDF()
+    {
+        context.startActivity(new Intent(context, PDFViewerActivity.class)
+        .putExtra("path", pdfFile.getAbsolutePath())
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
 
 }

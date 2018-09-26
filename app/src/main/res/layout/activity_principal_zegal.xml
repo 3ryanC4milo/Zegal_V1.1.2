@@ -52,7 +52,7 @@
         <Button
             android:id="@+id/btn_servicios"
             android:layout_width="83dp"
-            android:layout_height="70dp"
+            android:layout_height="83dp"
             android:layout_gravity="center"
             android:background="@drawable/c_servicios"
             android:onClick="botonClick"/>
@@ -87,7 +87,7 @@
         <Button
             android:id="@+id/btn_software"
             android:layout_width="83dp"
-            android:layout_height="70dp"
+            android:layout_height="83dp"
             android:layout_gravity="center"
             android:background="@drawable/c_software"
             android:onClick="botonClick"/>
@@ -123,7 +123,7 @@
         <Button
             android:id="@+id/btn_laboral"
             android:layout_width="83dp"
-            android:layout_height="70dp"
+            android:layout_height="83dp"
             android:layout_gravity="center"
             android:background="@drawable/c_laboral"
             android:onClick="botonClick"/>
@@ -159,9 +159,45 @@
         <Button
             android:id="@+id/btn_alianza"
             android:layout_width="83dp"
-            android:layout_height="70dp"
+            android:layout_height="83dp"
             android:layout_gravity="center"
             android:background="@drawable/c_alizanza"
+            android:onClick="botonClick"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_Signout"
+        android:layout_width="123dp"
+        android:layout_height="112dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/blanco"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.94">
+
+
+        <TextView
+            android:id="@+id/tv_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/CTR_5"
+            android:textColor="@color/azul_pred" />
+
+        <Button
+            android:id="@+id/btn_cerrar_sesion"
+            android:layout_width="83dp"
+            android:layout_height="83dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_cierra"
             android:onClick="botonClick"/>
 
 
