@@ -10,16 +10,16 @@ public class Servicio {
     private String facilidad;
     private int n_pagos;
     private String fecha_primer_pago;
-    private String fotoIneR1;
-    private String fotoIneR2;
-    private String fotoIneP1;
-    private String fotoIneP2;
+    //private String fotoIneR1;
+    //private String fotoIneR2;
+    //private String fotoIneP1;
+    //private String fotoIneP2;
 
     public Servicio(){
 
     }
 
-    public Servicio(String fecGenerado, String prestador, String prestatario, String finalidad, double monto, String facilidad, int n_pagos, String fecha_primer_pago, String fotoIneR1, String fotoIneR2, String fotoIneP1, String fotoIneP2) {
+    public Servicio(String fecGenerado, String prestador, String prestatario, String finalidad, double monto, String facilidad, int n_pagos, String fecha_primer_pago) {
         this.fecGenerado = fecGenerado;
         this.prestador = prestador;
         this.prestatario = prestatario;
@@ -28,10 +28,10 @@ public class Servicio {
         this.facilidad = facilidad;
         this.n_pagos = n_pagos;
         this.fecha_primer_pago = fecha_primer_pago;
-        this.fotoIneR1 = fotoIneR1;
-        this.fotoIneR2 = fotoIneR2;
-        this.fotoIneP1 = fotoIneP1;
-        this.fotoIneP2 = fotoIneP2;
+        //this.fotoIneR1 = fotoIneR1;
+        //this.fotoIneR2 = fotoIneR2;
+        //this.fotoIneP1 = fotoIneP1;
+        //this.fotoIneP2 = fotoIneP2;
     }
 
     public String getFecGenerado() {
@@ -98,7 +98,7 @@ public class Servicio {
         this.fecha_primer_pago = fecha_primer_pago;
     }
 
-    public String getFotoIneR1() {
+   /* public String getFotoIneR1() {
         return fotoIneR1;
     }
 
@@ -128,5 +128,5 @@ public class Servicio {
 
     public void setFotoIneP2(String fotoIneP2) {
         this.fotoIneP2 = fotoIneP2;
-    }
+    }*/
 }

@@ -2,7 +2,7 @@ package zegal.ganlen;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+
 import android.os.Environment;
 import android.util.Log;
 
@@ -44,7 +44,7 @@ public class Template {
     {
         crearPDF();
         try {
-            documento = new Document(PageSize.A4);
+            documento = new Document(PageSize.A4, 56f,56f,56f,56f);
             pdfWriter = PdfWriter.getInstance(documento, new FileOutputStream(pdfFile));
             documento.open();
 
@@ -75,128 +75,118 @@ public class Template {
         documento.addAuthor(autor);
     }
 
-    public void agregaClausula(String sub)
+    public void verPDF()
     {
-        try {
-            parrafo = new Paragraph();
-            addChildC(new Paragraph(sub, fClausulas));
-            parrafo.setSpacingBefore(5);
-            parrafo.setSpacingAfter(5);
-            documento.add(parrafo);
-        } catch (Exception e){
-            Log.e("agregaClausula", e.toString());
-        }
+        context.startActivity(new Intent(context, PDFViewerActivity.class)
+                .putExtra("path", pdfFile.getAbsolutePath())
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
-    private void addChildC(Paragraph childParagraph)
+    public void agregarParrafo(String par)
     {
-        childParagraph.setAlignment(Element.ALIGN_CENTER);
-        childParagraph.add(childParagraph);
-    }
-
-    public void addPrimer(String pri)
-    {
-        try{
-            parrafo = new Paragraph();
-            addChildP(new Paragraph(pri, fTexto));
-            parrafo.setSpacingAfter(5);
-            documento.add(parrafo);
-        } catch (Exception e)
+        try
         {
-            Log.e("addPrimer", e.toString());
-        }
-    }
-
-    private void addChildP(Paragraph chiParagraph)
-    {
-        chiParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
-        chiParagraph.add(chiParagraph);
-    }
-
-    public void addTexto(String pri)
-    {
-        try{
             parrafo = new Paragraph();
-            addChildT(new Paragraph(pri, fTexto));
-            parrafo.setSpacingBefore(5);
-            parrafo.setSpacingAfter(5);
+            addChiidP(new Paragraph(par, fTexto));
+            parrafo.setSpacingAfter(12);
             documento.add(parrafo);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
-            Log.e("addTexto", e.toString());
+            Log.e("agregarParrafo", e.toString());
         }
     }
 
-    private void addChildT(Paragraph chiParagraph)
+    private void addChiidP(Paragraph chilParagraph)
     {
-        chiParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
-        chiParagraph.add(chiParagraph);
+        chilParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
+        parrafo.add(chilParagraph);
     }
 
-    public void crearFirmero(String []header)
+    public void addClausula(String cl)
     {
+        try
+        {
+        parrafo = new Paragraph(cl, fClausulas);
+        parrafo.setAlignment(Element.ALIGN_CENTER);
+        parrafo.setSpacingAfter(12);
+        documento.add(parrafo);
+        }
+        catch (Exception e)
+        {
+            Log.e("addClausula", e.toString());
+        }
+
+    }
+
+    public void crearFirmero(String[] header) {
         try
         {
             parrafo = new Paragraph();
             parrafo.setFont(fTexto);
             PdfPTable pdfPTable = new PdfPTable(header.length);
-            parrafo.setSpacingBefore(30);
+            pdfPTable.setSpacingBefore(12);
             pdfPTable.setWidthPercentage(100);
             PdfPCell pdfPCell;
-            int indC =0;
-            while (indC<header.length)
-            {
-                pdfPCell = new PdfPCell(new Phrase(header[indC++], fTexto));
-                pdfPCell.setHorizontalAlignment(Element.ALIGN_LEFT);
-                pdfPCell.setBorderColor(BaseColor.WHITE);
-                pdfPCell.setBackgroundColor(BaseColor.WHITE);
 
+            int indexC = 0;
+
+            while (indexC < header.length) {
+                pdfPCell = new PdfPCell(new Phrase(header[indexC++], fTexto));
+                pdfPCell.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+                pdfPCell.setBackgroundColor(BaseColor.WHITE);
+                pdfPCell.setBorderColor(BaseColor.WHITE);
+                pdfPTable.addCell(pdfPCell);
             }
-            parrafo.setSpacingAfter(70);
             parrafo.add(pdfPTable);
             documento.add(parrafo);
-
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             Log.e("crearFirmero", e.toString());
         }
     }
 
-    public void TerminarFirmero(String []header)
-    {
+    public void crearFirmero2(String[] header) {
         try
         {
             parrafo = new Paragraph();
             parrafo.setFont(fTexto);
             PdfPTable pdfPTable = new PdfPTable(header.length);
+            pdfPTable.setSpacingBefore(70);
             pdfPTable.setWidthPercentage(100);
             PdfPCell pdfPCell;
-            int indC =0;
-            while (indC<header.length)
-            {
-                pdfPCell = new PdfPCell(new Phrase(header[indC++], fTexto));
-                pdfPCell.setHorizontalAlignment(Element.ALIGN_LEFT);
-                pdfPCell.setBorderColorTop(BaseColor.BLACK);
-                pdfPCell.setBorderColorLeft(BaseColor.WHITE);
-                pdfPCell.setBorderColorBottom(BaseColor.WHITE);
-                pdfPCell.setBorderColorRight(BaseColor.WHITE);
-                pdfPCell.setBackgroundColor(BaseColor.WHITE);
 
+            int indexC = 0;
+
+            while (indexC < header.length) {
+                pdfPCell = new PdfPCell(new Phrase(header[indexC++], fTexto));
+                pdfPCell.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+                pdfPCell.setBackgroundColor(BaseColor.WHITE);
+                pdfPCell.setUseVariableBorders(true);
+                pdfPCell.setBorderColorLeft(BaseColor.WHITE);
+                pdfPCell.setBorderColorRight(BaseColor.WHITE);
+                pdfPCell.setBorderColorBottom(BaseColor.WHITE);
+                if(indexC == 2){
+                    pdfPCell.setBorderColorTop(BaseColor.WHITE);
+                }
+                else{
+                    pdfPCell.setBorderColorTop(BaseColor.BLACK);
+                }
+                pdfPTable.addCell(pdfPCell);
             }
             parrafo.add(pdfPTable);
             documento.add(parrafo);
-
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
-            Log.e("TerminarFirmero", e.toString());
+            Log.e("crearFirmero", e.toString());
         }
     }
 
-    public void verPDF()
+    public void nuevaHoja()
     {
-        context.startActivity(new Intent(context, PDFViewerActivity.class)
-        .putExtra("path", pdfFile.getAbsolutePath())
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        documento.newPage();
     }
 
 }

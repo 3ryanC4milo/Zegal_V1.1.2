@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -22,6 +23,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.paypal.android.sdk.m;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -92,8 +95,11 @@ public class Signature extends AppCompatActivity {
             } else if(v == mCancel){
                 Log.v("log_tag", "Panel Canceled");
                 // Calling the BillDetailsActivity
-                Intent intent = new Intent(Signature.this, Identificacion.class);
-                startActivity(intent);
+                //Intent intent = new Intent(Signature.this, Identificacion.class);
+                //startActivity(intent);
+
+                onBackPressed();
+                finish();
             }
         }
     };
@@ -167,6 +173,7 @@ public class Signature extends AppCompatActivity {
 
                 // Convert the output file to Image such as .png
                 bitmap.compress(Bitmap.CompressFormat.PNG, 90, mFileOutStream);
+
                 Intent intent = new Intent(Signature.this, Identificacion.class);
                 intent.putExtra("imagePath", StoredPath);
                 startActivity(intent);
@@ -262,4 +269,5 @@ public class Signature extends AppCompatActivity {
             dirtyRect.bottom = Math.max(lastTouchY, eventY);
         }
     }
+
 }

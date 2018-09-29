@@ -1,57 +1,55 @@
 package zegal.ganlen;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AndroidException;
-import android.util.Base64;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.Manifest;
 
-import com.google.android.gms.tasks.OnFailureListener;
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.paypal.android.sdk.da;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
-import com.paypal.android.sdk.q;
 
 import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -59,7 +57,7 @@ import java.util.Locale;
 
 import zegal.ganlen.Config.Config;
 
-import static android.Manifest.permission.CAMERA;
+
 
 public class Identificacion extends AppCompatActivity {
 
@@ -85,14 +83,24 @@ public class Identificacion extends AppCompatActivity {
     StorageReference mStorageReference;
     ImageView ine1R, ine2R, ine1P, ine2P;
     Button cont, reg;
-    String in1, in2, in3, in4;
-    Uri fotoUri1, fotoUri2, fotoUri3, fotoUri4;
-
+    String in1, in2, in3, in4, in5, in6;
     String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
 // --------------------------------------- Instanciar la clase Template --------------------------------------
 
     Template template;
     String p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11;
+    static final int REQUEST_STORAGE_PDF = 5;
+
+//---------------------------------------------- Efectos para subir información ----------------------------------------
+    ProgressDialog pProgress;
+
+//------------------------------------------------- Variables para lienzos para firmar ------------------------------------
+
+    View f1, f2;
+    LinearLayout lien1, lien2;
+    Bitmap bitm1, bitm2;
+
+    Identificacionsignature firmaCliente, firmaAbogado;
 
 
 //---------------------------Desturctor del servicio de Paypal ------------------------
@@ -115,12 +123,15 @@ public class Identificacion extends AppCompatActivity {
         startService(intent);
 
 //----------------------------Inicializar objeto del template--------------------------------------
-        p1= "CONTRATO DE PRESTACIÓN DE SERVICIOS QUE SUSCRIBEN "+ getIntent().getStringExtra("prestador")
-                + " (EN ADELANTE EL PRESTADOR) Y "+ getIntent().getStringExtra("recibe") +" (EN ADELANTE EL CLIENTE) CONFORME A LAS SIGUIENTES CLÁUSULAS: ";
+
+        template = new Template(getApplicationContext());
+
+        p1= "CONTRATO DE PRESTACIÓN DE SERVICIOS QUE SUSCRIBEN "+ getIntent().getStringExtra("prestador").toUpperCase()
+                + " (EN ADELANTE EL PRESTADOR) Y "+ getIntent().getStringExtra("recibe").toUpperCase() +" (EN ADELANTE EL CLIENTE) CONFORME A LAS SIGUIENTES CLÁUSULAS: ";
 
         p2 = "CLÁUSULAS";
 
-        p3 = "PRIMERA. OBJETO. El objeto del contrato es la prestación de los siguientes servicios por el Prestador al Cliente: \n"+ getIntent().getStringExtra("finalidad");
+        p3 = "PRIMERA. OBJETO. El objeto del contrato es la prestación de los siguientes servicios por el Prestador al Cliente: ";
 
         p4 = "SEGUNDA. CONTRAPRESTACIÓN. Por la prestación de los servicios el Cliente pagará al Prestador la can-tidad de $ 2000.00 ("+MontoLetra.cantidadConLetra("2000")+" pesos) M.N. más IVA/ misma que será pagadera contra entrega de los servicios correspondientes. " +
                 "/ misma que será pagadera mediante un solo pago que deberá ser cubierto el "+getIntent().getStringExtra("fecPago") +"." +
@@ -145,8 +156,7 @@ public class Identificacion extends AppCompatActivity {
 
         p10 = "OCTAVA. DIVISIBILIDAD. En caso de que alguna de las cláusulas del contrato sea anulada mediante orden judicial, las demás cláusulas continuarán siendo válidas para las partes.";
 
-        p11 = "NOVENA. LEYES Y TRIBUNALES. Para la interpretación y cumplimiento del presente contrato el mismo se regirá por las leyes aplicables en la Ciudad de México y en caso de controversia las partes se someten a los tribunales competentes de la Ciudad de México, " +
-                "renunciando a cualquier otro fuero por razón de sus domicilios presentes o futuros o por cualquier otra circunstancia. \n" +
+        p11 = "NOVENA. LEYES Y TRIBUNALES. Para la interpretación y cumplimiento del presente contrato el mismo se regirá por las leyes aplicables en la Ciudad de México y en caso de controversia las partes se someten a los tribunales competentes de la Ciudad de México, renunciando a cualquier otro fuero por razón de sus domicilios presentes o futuros o por cualquier otra circunstancia. \n" +
                 "El presente contrato se firma libre de dolo, error, mala fe o cualquier otro vicio que pueda afectar el con-sentimiento de las partes, en la Ciudad de México a los "+
                 String.valueOf(fecha.get(Calendar.DATE))+" DÍAS DEL MES DE "+mes[fecha.get(Calendar.MONTH)].toUpperCase()+" DEL AÑO "+String.valueOf(fecha.get(Calendar.YEAR))+".";
 
@@ -162,6 +172,24 @@ public class Identificacion extends AppCompatActivity {
         ine2P = findViewById(R.id.imvIneBack2);
         reg = findViewById(R.id.btn_return);
         cont = findViewById(R.id.btnContrato);
+
+//-------------------------------------- Firma ---------------------------------------------------------------
+
+        lien1 = findViewById(R.id.lyF1);
+        lien2 = findViewById(R.id.lyF2);
+
+        firmaCliente = new Identificacionsignature(lien1.getContext().getApplicationContext(),null);
+        firmaCliente.setBackgroundColor(Color.WHITE);
+        firmaAbogado = new Identificacionsignature(lien2.getContext().getApplicationContext(),null);
+        firmaCliente.setBackgroundColor(Color.WHITE);
+
+        lien1.addView(firmaCliente, ViewGroup.LayoutParams.MATCH_PARENT, 500);
+        lien2.addView(firmaAbogado, ViewGroup.LayoutParams.MATCH_PARENT, 500);
+
+        f1 = lien1;
+        f2 = lien2;
+
+        pProgress = new ProgressDialog(getApplicationContext());
 
         cont.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,44 +210,61 @@ public class Identificacion extends AppCompatActivity {
                 String date = getIntent().getStringExtra("fecPago");
                 String gen = dia + " de " + month + " de " + anio;
 
-                template = new Template(getApplicationContext());
-                template.abrePDF();
-                template.agregaData("Contrato de Servicios", getIntent().getStringExtra("finalidad"), "ZegalAPP");
-                template.addPrimer(p1);
-                template.agregaClausula(p2);
-                template.addTexto(p3);
-                template.addTexto(p4);
-                template.addTexto(p5);
-                template.addTexto(p6);
-                template.addTexto(p7);
-                template.addTexto(p8);
-                template.addTexto(p9);
-                template.addTexto(p10);
-                template.addTexto(p11);
-                template.crearFirmero(new String[]{"EL ABOGADO", "EL CLIENTE"});
-                template.TerminarFirmero(new String[]{getIntent().getStringExtra("prestador"), getIntent().getStringExtra("recibe")});
-                template.cierraPDF();
+                //firmaCliente.saveCliente(f1,bitm1,lien1);
+                //firmaAbogado.saveAbogado(f2,bitm2,lien2);
 
-                CargarDatosServicio(rec, pre, fin, mon, opc, par, date, gen, in1, in2, in3, in4);
-                procesarDatos();
+                if(Build.VERSION.SDK_INT>=23)
+                {
+                    crearPdf();
+                }
+                else
+                    pdfPDF();
+
+                ///CargarDatosServicio(rec, pre, fin, mon, opc, par, date, gen, in1, in2, in3, in4);
+                //procesarDatos();
             }
+
+
         });
 
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Identificacion.this, Contrato_Servicio.class));
+                onBackPressed();
                 finish();
             }
         });
     }
+
+    private void pdfPDF() {
+        template.abrePDF();
+        template.agregaData("Contrato de Servicios", getIntent().getStringExtra("finalidad"), "ZegalAPP");
+        template.agregarParrafo(p1);
+        template.addClausula(p2);
+        template.agregarParrafo(p3);
+        template.agregarParrafo(getIntent().getStringExtra("finalidad").toUpperCase());
+        template.agregarParrafo(p4);
+        template.agregarParrafo(p5);
+        template.agregarParrafo(p6);
+        template.agregarParrafo(p7);
+        template.agregarParrafo(p8);
+        template.agregarParrafo(p9);
+        template.agregarParrafo(p10);
+        template.agregarParrafo(p11);
+        template.crearFirmero(new String[]{"EL ABOGADO","","EL CLIENTE"});
+        template.crearFirmero2(new String[]{getIntent().getStringExtra("prestador").toUpperCase(),"",getIntent().getStringExtra("recibe").toUpperCase()});
+        template.cierraPDF();
+        template.verPDF();
+    }
+
+
     //----------------------------- Funciones para tomar las respectivas fotos -----------------------
     private void openCamera () {
 
         if(Build.VERSION.SDK_INT >= 23)
         {
             // check for camera permission
-            int permissionCheck = ContextCompat.checkSelfPermission(Identificacion.this, CAMERA);
+            int permissionCheck = ContextCompat.checkSelfPermission(Identificacion.this, Manifest.permission.CAMERA);
 
             // do we have camera permission?
             if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -234,7 +279,7 @@ public class Identificacion extends AppCompatActivity {
 
                 // we don't have it, request camera permission from system
                 ActivityCompat.requestPermissions(this,
-                        new String[]{CAMERA},
+                        new String[]{Manifest.permission.CAMERA},
                         REQUEST_IMAGE_CAPTURE);
             }
         }
@@ -251,7 +296,7 @@ public class Identificacion extends AppCompatActivity {
         if(Build.VERSION.SDK_INT >= 23)
         {
             // check for camera permission
-            int permissionCheck = ContextCompat.checkSelfPermission(Identificacion.this, CAMERA);
+            int permissionCheck = ContextCompat.checkSelfPermission(Identificacion.this, Manifest.permission.CAMERA);
 
             // do we have camera permission?
             if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -266,7 +311,7 @@ public class Identificacion extends AppCompatActivity {
 
                 // we don't have it, request camera permission from system
                 ActivityCompat.requestPermissions(this,
-                        new String[]{CAMERA},
+                        new String[]{Manifest.permission.CAMERA},
                         REQUEST_IMAGE_CAPTURE);
             }
         }
@@ -284,7 +329,7 @@ public class Identificacion extends AppCompatActivity {
         if(Build.VERSION.SDK_INT >= 23)
         {
             // check for camera permission
-            int permissionCheck = ContextCompat.checkSelfPermission(Identificacion.this, CAMERA);
+            int permissionCheck = ContextCompat.checkSelfPermission(Identificacion.this, Manifest.permission.CAMERA);
 
             // do we have camera permission?
             if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -299,7 +344,7 @@ public class Identificacion extends AppCompatActivity {
 
                 // we don't have it, request camera permission from system
                 ActivityCompat.requestPermissions(this,
-                        new String[]{CAMERA},
+                        new String[]{Manifest.permission.CAMERA},
                         REQUEST_IMAGE_CAPTURE);
             }
         }
@@ -316,7 +361,7 @@ public class Identificacion extends AppCompatActivity {
         if(Build.VERSION.SDK_INT >= 23)
         {
             // check for camera permission
-            int permissionCheck = ContextCompat.checkSelfPermission(Identificacion.this, CAMERA);
+            int permissionCheck = ContextCompat.checkSelfPermission(Identificacion.this, Manifest.permission.CAMERA);
 
             // do we have camera permission?
             if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -331,7 +376,7 @@ public class Identificacion extends AppCompatActivity {
 
                 // we don't have it, request camera permission from system
                 ActivityCompat.requestPermissions(this,
-                        new String[]{CAMERA},
+                        new String[]{Manifest.permission.CAMERA},
                         REQUEST_IMAGE_CAPTURE);
             }
         }
@@ -403,6 +448,18 @@ public class Identificacion extends AppCompatActivity {
                 Log.d(TAG, "permissions not accepted");
             }
         }
+
+        else if(requestCode == REQUEST_STORAGE_PDF)
+        {
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                pdfPDF();
+            }
+            else
+            {
+                Toast.makeText(this, "The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
+            }
+        }
+
     }
 
     @Override
@@ -416,7 +473,16 @@ public class Identificacion extends AppCompatActivity {
 
                 if (confirmation != null)
                 {
-                    template.verPDF();
+                    try
+                    {
+                        String detalle = confirmation.toJSONObject().toString(4);
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+
                 }
             }
 
@@ -430,113 +496,168 @@ public class Identificacion extends AppCompatActivity {
             }
         }
         else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            StorageReference ineref = mStorageReference.child("Identificaciones/ "+pic_name+".png");
+            //pProgress.setMessage("Subiendo foto a servidor");
+            //pProgress.show();
+
+            final StorageReference ine1 = mStorageReference.child("Identificaciones/cliente_"+pic_name+"_front.png");
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.PNG,90,baos);
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 90, baos);
             byte[] datas = baos.toByteArray();
 
-
-            ineref.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            ine1.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getBaseContext(),"Subida con exito",Toast.LENGTH_LONG);
+                    ine1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            in1 = uri.toString();
+                        }
+                    });
+
+
+                    //pProgress.dismiss();
+
+                    Glide.with(Identificacion.this)
+                            .using(new FirebaseImageLoader())
+                            .load(ine1)
+                            .into(ine1R);
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getBaseContext(),"Hubo un error",Toast.LENGTH_LONG);
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    //pProgress.setMessage("Cargando " + (int) progress + "%");
+                    //pProgress.show();
                 }
             });
-            in1 = ineref.getDownloadUrl().toString();
-            ine1R.setImageBitmap(imageBitmap);
         }
         else if(requestCode == REQUEST_IMAGE_CAP_TWO && resultCode == RESULT_OK) {
+
+
+
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            StorageReference ineref = mStorageReference.child("Identificaciones/ "+pic_name+".png");
+            final StorageReference ine2 = mStorageReference.child("Identificaciones/cliente_"+pic_name+"_back.png");
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.PNG,90,baos);
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 90, baos);
             byte[] datas = baos.toByteArray();
 
-
-            ineref.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            ine2.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getBaseContext(),"Subida con exito",Toast.LENGTH_LONG);
+                    ine2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            in2 = uri.toString();
+                        }
+                    });
+
+                    //pProgress.dismiss();
+
+                    Glide.with(Identificacion.this)
+                            .using(new FirebaseImageLoader())
+                            .load(ine2)
+                            .into(ine2R);
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getBaseContext(),"Hubo un error",Toast.LENGTH_LONG);
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    //pProgress.setMessage("Cargando " + (int) progress + "%");
+                    //pProgress.show();
                 }
             });
-            in2 = ineref.getDownloadUrl().toString();
-            ine2R.setImageBitmap(imageBitmap);
+
         }
         else if (requestCode == REQUEST_IMAGE_CAP_TRES && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            StorageReference ineref = mStorageReference.child("Identificaciones/ "+pic_name+".png");
+            final StorageReference ine3 = mStorageReference.child("Identificaciones/abogado_"+pic_name+"_front.png");
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.PNG,90,baos);
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 90, baos);
             byte[] datas = baos.toByteArray();
 
-
-            ineref.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            ine3.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getBaseContext(),"Subida con exito",Toast.LENGTH_LONG);
+                    ine3.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            in3 = uri.toString();
+                        }
+                    });
+
+                    //pProgress.dismiss();
+
+                    Glide.with(Identificacion.this)
+                            .using(new FirebaseImageLoader())
+                            .load(ine3)
+                            .into(ine1P);
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getBaseContext(),"Hubo un error",Toast.LENGTH_LONG);
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    //pProgress.setMessage("Cargando " + (int) progress + "%");
+                    //pProgress.show();
                 }
             });
-
-            in3 = ineref.getDownloadUrl().toString();
-            ine1P.setImageBitmap(imageBitmap);
         }
         else if(requestCode == REQUEST_IMAGE_CAP_CUATRO && resultCode == RESULT_OK) {
-
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            StorageReference ineref = mStorageReference.child("Identificaciones/ "+pic_name+".png");
+
+            final StorageReference ine4 = mStorageReference.child("Identificaciones/abogado_"+pic_name+"_back.png");
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.PNG,90,baos);
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 90, baos);
             byte[] datas = baos.toByteArray();
 
-
-            ineref.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            ine4.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getBaseContext(),"Subida con exito",Toast.LENGTH_LONG);
+                    ine4.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            in4 = uri.toString();
+                        }
+                    });
+
+                    //pProgress.dismiss();
+
+                    Glide.with(Identificacion.this)
+                            .using(new FirebaseImageLoader())
+                            .load(ine4)
+                            .into(ine2P);
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getBaseContext(),"Hubo un error",Toast.LENGTH_LONG);
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    //pProgress.setMessage("Cargando " + (int) progress + "%");
+                    //pProgress.show();
                 }
             });
-            in4 = ineref.getDownloadUrl().toString();
-
-            ine2P.setImageBitmap(imageBitmap);
         }
     }
+
+
+
+
 
     private void CargarDatosServicio(String rec, String pre, String fin, double mon, String opc, int par, String date, String gen, String fotoIneR1, String fotoIneR2, String fotoIneP1, String fotoIneP2) {
         Servicio servicio;
         String id = mDatabaseReference.push().getKey();
-        servicio = new Servicio(gen, rec, pre, fin, mon, opc, par, date, fotoIneR1, fotoIneR2, fotoIneP1, fotoIneP2);
+        servicio = new Servicio(gen, rec, pre, fin, mon, opc, par, date);
         mDatabaseReference.child("Contrato_Servicio").child(id).setValue(servicio);
         Toast.makeText(getApplicationContext(),
                 "Datos capturados exitosamente",
@@ -574,4 +695,207 @@ public class Identificacion extends AppCompatActivity {
 
     }
 
+//---------------------------- Se crea clase firma para darle funcionalidad a los lienzos ----------------------------------------------
+
+    public class Identificacionsignature extends View {
+
+        private static final float STROKE_WIDTH = 5f;
+        private static final float HALF_STROKE_WIDTH = STROKE_WIDTH / 2;
+        private Paint paint = new Paint();
+        private Path path = new Path();
+
+        private float lastTouchX;
+        private float lastTouchY;
+        private final RectF dirtyRect = new RectF();
+
+        public Identificacionsignature(Context context, AttributeSet attrs) {
+            super(context, attrs);
+            paint.setAntiAlias(true);
+            paint.setColor(Color.BLACK);
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeJoin(Paint.Join.ROUND);
+            paint.setStrokeWidth(STROKE_WIDTH);
+        }
+
+        public void saveCliente(View v, Bitmap bitmap, LinearLayout mContent) {
+
+            pProgress.setMessage("Subiendo firma a servidor");
+            pProgress.show();
+            Log.v("log_tag", "Width: " + v.getWidth());
+            Log.v("log_tag", "Height: " + v.getHeight());
+            if (bitmap == null) {
+                bitmap = Bitmap.createBitmap(mContent.getWidth(), mContent.getHeight(), Bitmap.Config.RGB_565);
+            }
+            Canvas canvas = new Canvas(bitmap);
+                // Output the file
+                v.draw(canvas);
+
+                final StorageReference firma = mStorageReference.child("Firmas/ "+"ServiciosFirma"+ pic_name+".png");
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, baos);
+                byte[] drawing = baos.toByteArray();
+
+                firma.putBytes(drawing).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        firma.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                pProgress.dismiss();
+                                in5 = uri.toString();
+                                Toast.makeText(getApplicationContext(), "La firma del cliente fue añadida al Servidor", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                        pProgress.setMessage("Cargando " + (int) progress + "%");
+                    }
+                });
+        }
+
+        public void saveAbogado(View v, Bitmap bitmap, LinearLayout mContent) {
+
+            pProgress.setMessage("Subiendo firma a servidor");
+            pProgress.show();
+            Log.v("log_tag", "Width: " + v.getWidth());
+            Log.v("log_tag", "Height: " + v.getHeight());
+            if (bitmap == null) {
+                bitmap = Bitmap.createBitmap(mContent.getWidth(), mContent.getHeight(), Bitmap.Config.RGB_565);
+            }
+            Canvas canvas = new Canvas(bitmap);
+            // Output the file
+            v.draw(canvas);
+
+            final StorageReference firma2 = mStorageReference.child("Firmas/ "+"ServiciosFirma"+ pic_name+".png");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, baos);
+            byte[] drawing = baos.toByteArray();
+
+            firma2.putBytes(drawing).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    firma2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            pProgress.dismiss();
+                            in6 = uri.toString();
+                            Toast.makeText(getApplicationContext(), "La firma del abogado fue añadida al Servidor", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    pProgress.setMessage("Cargando " + (int) progress + "%");
+                }
+            });
+        }
+
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            canvas.drawPath(path, paint);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            float eventX = event.getX();
+            float eventY = event.getY();
+            //mGetSign.setEnabled(true);
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    path.moveTo(eventX, eventY);
+                    lastTouchX = eventX;
+                    lastTouchY = eventY;
+                    return true;
+
+                case MotionEvent.ACTION_MOVE:
+
+                case MotionEvent.ACTION_UP:
+
+                    resetDirtyRect(eventX, eventY);
+                    int historySize = event.getHistorySize();
+                    for (int i = 0; i < historySize; i++) {
+                        float historicalX = event.getHistoricalX(i);
+                        float historicalY = event.getHistoricalY(i);
+                        expandDirtyRect(historicalX, historicalY);
+                        path.lineTo(historicalX, historicalY);
+                    }
+                    path.lineTo(eventX, eventY);
+                    break;
+
+                default:
+                    debug("Ignored touch event: " + event.toString());
+                    return false;
+            }
+
+            invalidate((int) (dirtyRect.left - HALF_STROKE_WIDTH),
+                    (int) (dirtyRect.top - HALF_STROKE_WIDTH),
+                    (int) (dirtyRect.right + HALF_STROKE_WIDTH),
+                    (int) (dirtyRect.bottom + HALF_STROKE_WIDTH));
+
+            lastTouchX = eventX;
+            lastTouchY = eventY;
+
+            return true;
+        }
+
+        private void debug(String string) {
+
+            Log.v("log_tag", string);
+
+        }
+
+        private void expandDirtyRect(float historicalX, float historicalY) {
+            if (historicalX < dirtyRect.left) {
+                dirtyRect.left = historicalX;
+            } else if (historicalX > dirtyRect.right) {
+                dirtyRect.right = historicalX;
+            }
+
+            if (historicalY < dirtyRect.top) {
+                dirtyRect.top = historicalY;
+            } else if (historicalY > dirtyRect.bottom) {
+                dirtyRect.bottom = historicalY;
+            }
+        }
+
+        private void resetDirtyRect(float eventX, float eventY) {
+            dirtyRect.left = Math.min(lastTouchX, eventX);
+            dirtyRect.right = Math.max(lastTouchX, eventX);
+            dirtyRect.top = Math.min(lastTouchY, eventY);
+            dirtyRect.bottom = Math.max(lastTouchY, eventY);
+        }
+    }
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+
+    public boolean crearPdf()
+    {
+        if(Build.VERSION.SDK_INT >=23)
+        {
+            if(getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED)
+            {
+                pdfPDF();
+                return true;
+            }
+            else
+            {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_STORAGE_PDF);
+                return false;
+            }
+        }
+        else
+        {
+            pdfPDF();
+            return true;
+        }
+    }
 }
+
+

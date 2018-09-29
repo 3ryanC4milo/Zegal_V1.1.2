@@ -25,13 +25,13 @@ public class Principal_zegal extends AppCompatActivity {
         switch (view.getId())
         {
             case R.id.btn_alianza:
-                Toast.makeText(this, "Proximamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Próximamente", Toast.LENGTH_LONG).show();
                 break;
             case R.id.btn_laboral:
-                Toast.makeText(this, "Proximamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Próximamente", Toast.LENGTH_LONG).show();
                 break;
             case R.id.btn_software:
-                Toast.makeText(this, "Proximamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Próximamente", Toast.LENGTH_LONG).show();
                 break;
             case R.id.btn_servicios:
                 startActivity(new Intent(Principal_zegal.this,Contrato_Servicio.class));

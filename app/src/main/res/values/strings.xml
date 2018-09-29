@@ -56,13 +56,13 @@
     <string name="desc1">Agilizará el proceso de contratar el servicio entre dos personas.</string>
 
     <string name="tit2">Licencia de Software</string>
-    <string name="desc2">Proximamente</string>
+    <string name="desc2">Próximamente</string>
 
     <string name="tit3">Laboral</string>
-    <string name="desc3">Proximamente</string>
+    <string name="desc3">Próximamente</string>
 
     <string name="tit4">Alianzas</string>
-    <string name="desc4">Proximamente</string>
+    <string name="desc4">Próximamente</string>
 
     <string name="omite">Omitir</string>
 
@@ -94,7 +94,7 @@
     <string name="agregarfoto">Escanear identificación</string>
     <string name="btn_conf">Confirmar Solicitud</string>
     <string name="btn_contrato">Generar contrato</string>
-    <string name="btn_firma">Plasmar firma</string>
+    <string name="btn_firma">Introduzca su firma electónica</string>
 
     <!-- Strings forma pago o confirmación de compra-->
     <string name="conf">Gracias por contar con Zegal. En un plazo de 12 horas recibiras tu contrato</string>

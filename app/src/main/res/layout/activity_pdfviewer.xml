@@ -8,14 +8,11 @@
     tools:context=".PDFViewerActivity"
     android:background="@color/gradient_azul">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:background="@color/blanco"
             android:gravity="center"
@@ -26,18 +23,20 @@
 
             <com.github.barteksc.pdfviewer.PDFView
                 android:id="@+id/pdfViewer"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
-
-            <Button
-                android:id="@+id/btn_Fin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/azul_pred"
-                android:textColor="@color/blanco"
-                android:text="@string/btn_terminar1"/>
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btn_Fin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@color/azul_pred"
+                    android:text="@string/btn_terminar1"
+                    android:textColor="@color/blanco" />
+
+            </com.github.barteksc.pdfviewer.PDFView>
 
         </LinearLayout>
-
-    </ScrollView>
 </LinearLayout>
