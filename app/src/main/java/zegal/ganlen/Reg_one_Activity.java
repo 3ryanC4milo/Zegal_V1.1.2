@@ -143,11 +143,12 @@ public class Reg_one_Activity extends AppCompatActivity implements View.OnClickL
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    progressBar.setVisibility(View.GONE);
+                                   progressBar.setVisibility(View.GONE);
                                     if (task.isSuccessful()) {
+                                        new PreferenceManager(Reg_one_Activity.this).clearPreference();
                                         Toast.makeText(Reg_one_Activity.this, getString(R.string.registration_success), Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(Reg_one_Activity.this, WelcomeActivity.class);
-                                        intent.putExtra("mail", nombre);
+                                        //intent.putExtra("mail", nombre);
                                         startActivity(intent);
                                         finish();
                                     } else {

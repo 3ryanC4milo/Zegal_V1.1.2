@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_principal"
+    android:background="@color/gradient_azul"
     tools:context=".Reg_one_Activity">
 
     <LinearLayout
@@ -133,12 +133,11 @@
             android:id="@+id/BTN_cuenta_activa"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:background="@drawable/rectangulo"
+            android:background="@color/grad_sec"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/blanco"
             android:layout_margin="10dp"
-            tools:text="@string/cuenta_Act" />
+            android:text="@string/cuenta_Act" />
 
     </LinearLayout>
 

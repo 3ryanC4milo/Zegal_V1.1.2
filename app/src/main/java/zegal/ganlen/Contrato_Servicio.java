@@ -43,10 +43,10 @@ public class Contrato_Servicio extends AppCompatActivity {
 
     private static final int PAYPAL_REQUEST_CODE = 7171;
     //Esta variable es para jalar la cuenta de prueba para testeo, se requerira cambiar valores despues de las respectivas pruebas
-    private static PayPalConfiguration config = new PayPalConfiguration().environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+    private static PayPalConfiguration config = new PayPalConfiguration().environment(PayPalConfiguration.ENVIRONMENT_PRODUCTION)
             .clientId(Config.PAYPAL_CLIENT_ID);
 
-    EditText recibe, presta, finalidad, parcial;
+    EditText recibe, presta, finalidad, monto, parcial;
     TextView v;
     Spinner spin;
     CalendarView calendarView;
@@ -84,11 +84,12 @@ public class Contrato_Servicio extends AppCompatActivity {
         recibe = findViewById(R.id.et_persona_recibe);
         presta = findViewById(R.id.et_persona_presta);
         finalidad = findViewById(R.id.et_finalidad);
+        monto = findViewById(R.id.et_monto);
         parcial = findViewById(R.id.et_pagos);
 
 
         spin = findViewById(R.id.sp_pago);
-        String[] opcion_pago ={"Seleccione", "Pago único", "Pagos parciales"};
+        String[] opcion_pago ={"Seleccione", "Pago único"};
         spin.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opcion_pago));
 
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -106,11 +107,11 @@ public class Contrato_Servicio extends AppCompatActivity {
                         parcial.setEnabled(false);
                         parcial.setText("0");
                         break;
-                    case 2:
+                    /*case 2:
                         seleccion = "Pagos parciales";
                         parcial.setEnabled(true);
                         parcial.setText("");
-                        break;
+                        break;*/
                 }
             }
 
@@ -144,7 +145,7 @@ public class Contrato_Servicio extends AppCompatActivity {
         btnEnvia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String rec = recibe.getText().toString();
+                /*String rec = recibe.getText().toString();
                 String pre = presta.getText().toString();
                 String fin = finalidad.getText().toString();
                 String opc = seleccion;
@@ -167,8 +168,8 @@ public class Contrato_Servicio extends AppCompatActivity {
                 p3 = "PRIMERA. OBJETO. El objeto del contrato es la prestación de los siguientes servicios por el Prestador al Cliente: ";
 
 
-                p4 = "SEGUNDA. CONTRAPRESTACIÓN. Por la prestación de los servicios el Cliente pagará al Prestador la can-tidad de $ 2000.00 ("+MontoLetra.cantidadConLetra("2000")+" pesos) M.N. más IVA/ misma que será pagadera contra entrega de los servicios correspondientes. " +
-                        "/ misma que será pagadera mediante un solo pago que deberá ser cubierto el "+date +"." +
+                p4 = "SEGUNDA. CONTRAPRESTACIÓN. Por la prestación de los servicios el Cliente pagará al Prestador la can-tidad de $ 2000.00 ("+MontoLetra.cantidadConLetra("2000")+" pesos) M.N. más IVA misma que será pagadera contra entrega de los servicios correspondientes. " +
+                        " misma que será pagadera mediante un solo pago que deberá ser cubierto el "+date+"." +
                         "\n La cantidad(es) señalada(s) en esta cláusula podrá ser cubierta(s) en cualquier forma de pago.";
 
                 p5 = "TERCERA. VIGENCIA. El plazo del contrato será indefinido, por la naturaleza de los servicios prestados.\n" +
@@ -192,7 +193,7 @@ public class Contrato_Servicio extends AppCompatActivity {
 
                 p11 = "NOVENA. LEYES Y TRIBUNALES. Para la interpretación y cumplimiento del presente contrato el mismo se regirá por las leyes aplicables en la Ciudad de México y en caso de controversia las partes se someten a los tribunales competentes de la Ciudad de México, renunciando a cualquier otro fuero por razón de sus domicilios presentes o futuros o por cualquier otra circunstancia. \n" +
                         "El presente contrato se firma libre de dolo, error, mala fe o cualquier otro vicio que pueda afectar el con-sentimiento de las partes, en la Ciudad de México a los "+
-                        String.valueOf(aux.get(Calendar.DATE))+" DÍAS DEL MES DE "+mes[aux.get(Calendar.MONTH)].toUpperCase()+" DEL AÑO "+String.valueOf(aux.get(Calendar.YEAR))+".";
+                        String.valueOf(aux.get(Calendar.DATE))+" DÍA(S) DEL MES DE "+mes[aux.get(Calendar.MONTH)].toUpperCase()+" DEL AÑO "+String.valueOf(aux.get(Calendar.YEAR))+".";
 
 
                 if(rec.isEmpty() || pre.isEmpty() || fin.isEmpty() || opc.equals("Seleccione"))
@@ -207,6 +208,18 @@ public class Contrato_Servicio extends AppCompatActivity {
                     CargarDatosServicio(rec, pre, fin, 2000, opc, Integer.parseInt(par), date, String.valueOf(aux.get(Calendar.DATE))+" de "+mes[aux.get(Calendar.MONTH)]+" de "+String.valueOf(aux.get(Calendar.YEAR)));
                     procesarDatos();
 
+                }*/
+
+                if(recibe.getText().toString().isEmpty() || presta.getText().toString().isEmpty() || finalidad.getText().toString().isEmpty() || spin.equals("Seleccione") || monto.getText().toString().isEmpty())
+                {
+                    Toast.makeText(
+                            Contrato_Servicio.this,
+                            "Por favor, complete los campos",
+                            Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    procesarDatos();
                 }
             }
         });
@@ -239,10 +252,67 @@ public class Contrato_Servicio extends AppCompatActivity {
             if(resultCode == RESULT_OK)
             {
                 PaymentConfirmation confirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                String rec = recibe.getText().toString();
+                String pre = presta.getText().toString();
+                String fin = finalidad.getText().toString();
+                String opc = seleccion;
+                String par = parcial.getText().toString();
+                String date;
+
+                if(fec.isEmpty())
+                {
+                    date = String.valueOf(aux.get(Calendar.DATE))+" de "+mes[aux.get(Calendar.MONTH)]+" de "+String.valueOf(aux.get(Calendar.YEAR));
+                }
+                else
+                {
+                    date = fec;
+                }
+                p1= "CONTRATO DE PRESTACIÓN DE SERVICIOS QUE SUSCRIBEN "+ pre.toUpperCase()
+                        + " (EN ADELANTE EL PRESTADOR) Y "+ rec.toUpperCase() +" (EN ADELANTE EL CLIENTE) CONFORME A LAS SIGUIENTES CLÁUSULAS: ";
+
+                p2 = "CLÁUSULAS";
+
+                p3 = "PRIMERA. OBJETO. El objeto del contrato es la prestación de los siguientes servicios por el Prestador al Cliente: ";
+
+
+                p4 = "SEGUNDA. CONTRAPRESTACIÓN. Por la prestación de los servicios el Cliente pagará al Prestador la can-tidad de $ 2000.00 ("+MontoLetra.cantidadConLetra("2000")+" pesos) M.N. más IVA misma que será pagadera " +
+                        "mediante un solo pago que deberá ser cubierto el "+date+"." +
+                        "\n La cantidad(es) señalada(s) en esta cláusula podrá ser cubierta(s) en cualquier forma de pago.";
+
+                p5 = "TERCERA. VIGENCIA. El plazo del contrato será indefinido, por la naturaleza de los servicios prestados.\n" +
+                        "Las partes acuerdan que el contrato terminará su vigencia de forma natural mediante la prestación de los servicios objeto de este contrato.\n";
+
+                p6 = "CUARTA. GASTOS. Ambas partes acuerdan que todos los gastos generados por la prestación de los ser-vicios descritos en la cláusula Primera serán a cargo del Cliente.";
+
+                p7 ="QUINTA. LIBERACIÓN DE RESPONSABILIDAD. El Cliente reconoce que el Prestador obrará de buena fe en la prestación de los servicios, con la capacidad técnica y experiencia necesaria para cumplir " +
+                        "con el objeto del contrato, por lo cual en este acto lo libera de cualquier responsabilidad civil, mercantil, penal o administrativa derivada de la prestación de los servicios prestados. \n" +
+                        "En caso de que ocurra un sismo, incendio, terremoto, inundación o cualquier otro fenómeno natural que impida que se presten los servicios, el Cliente no se reserva ninguna acción en contra del Prestador " +
+                        "o su personal y se obliga a sacarlos en paz y a salvo de cualquier procedimiento judicial o extrajudicial en cual-quier materia jurídica, así como a pagar al Prestador cualquier gasto relacionado con ese procedimiento, " +
+                        "incluidos los honorarios de abogados.";
+
+                p8 = "SEXTA. DATOS PERSONALES. Los datos personales del Cliente serán tratados conforme a la Ley Federal de Protección de Datos Personales en Posesión de Particulares y el Aviso de Privacidad del Prestador.";
+
+                p9 = "SÉPTIMA. CONFIDENCIALIDAD. El Prestador guardará confidencialidad de la información que reciba del Cliente en relación con los servicios objeto del contrato.\n"+
+                        "El Prestador deberá abstenerse de comunicar por cualquier medio a terceros la información que conozca en virtud de su participación en los proyectos en los que sea parte.\n"+
+                        "En caso de que el Prestador incumpla su obligación de confidencialidad, deberá pagar los daños y perjui-cios causado al Cliente.";
+
+                p10 = "OCTAVA. DIVISIBILIDAD. En caso de que alguna de las cláusulas del contrato sea anulada mediante orden judicial, las demás cláusulas continuarán siendo válidas para las partes.";
+
+                if(aux.get(Calendar.DATE)==1)
+                {
+                    p11 = "NOVENA. LEYES Y TRIBUNALES. Para la interpretación y cumplimiento del presente contrato el mismo se regirá por las leyes aplicables en la Ciudad de México y en caso de controversia las partes se someten a los tribunales competentes de la Ciudad de México, renunciando a cualquier otro fuero por razón de sus domicilios presentes o futuros o por cualquier otra circunstancia. \n" +
+                            "El presente contrato se firma libre de dolo, error, mala fe o cualquier otro vicio que pueda afectar el con-sentimiento de las partes, en la Ciudad de México al PRIMER DÍA DEL MES DE "+mes[aux.get(Calendar.MONTH)].toUpperCase()+" DEL AÑO "+String.valueOf(aux.get(Calendar.YEAR))+".";
+                }
+                else
+                {
+                    p11 = "NOVENA. LEYES Y TRIBUNALES. Para la interpretación y cumplimiento del presente contrato el mismo se regirá por las leyes aplicables en la Ciudad de México y en caso de controversia las partes se someten a los tribunales competentes de la Ciudad de México, renunciando a cualquier otro fuero por razón de sus domicilios presentes o futuros o por cualquier otra circunstancia. \n" +
+                            "El presente contrato se firma libre de dolo, error, mala fe o cualquier otro vicio que pueda afectar el con-sentimiento de las partes, en la Ciudad de México a los "+
+                            String.valueOf(aux.get(Calendar.DATE))+" DÍAS DEL MES DE "+mes[aux.get(Calendar.MONTH)].toUpperCase()+" DEL AÑO "+String.valueOf(aux.get(Calendar.YEAR))+".";
+                }
 
                 if (confirmation != null)
                 {
-
+                    CargarDatosServicio(rec, pre, fin, 2000, opc, Integer.parseInt(par), date, String.valueOf(aux.get(Calendar.DATE))+" de "+mes[aux.get(Calendar.MONTH)]+" de "+String.valueOf(aux.get(Calendar.YEAR)));
                     if(Build.VERSION.SDK_INT>=23)
                     {
                         crearPdf();
@@ -251,6 +321,7 @@ public class Contrato_Servicio extends AppCompatActivity {
                     {
                         pdfPDF();
                     }
+
                     /*try
                     {
                         String detalle = confirmation.toJSONObject().toString(4);
@@ -314,7 +385,7 @@ public class Contrato_Servicio extends AppCompatActivity {
         template.agregarParrafo(p9);
         template.agregarParrafo(p10);
         template.agregarParrafo(p11);
-        template.crearFirmero(new String[]{"EL ABOGADO","","EL CLIENTE"});
+        template.crearFirmero(new String[]{"EL PRESTADOR","","EL CLIENTE"});
         template.crearFirmero2(new String[]{presta.getText().toString().toUpperCase(),"",recibe.getText().toString().toUpperCase()});
         template.cierraPDF();
         template.verPDF();

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_principal"
+    android:background="@color/gradient_azul"
     tools:context=".Principal_zegal">
 
     <TextView
@@ -86,8 +86,8 @@
 
         <Button
             android:id="@+id/btn_software"
-            android:layout_width="83dp"
-            android:layout_height="83dp"
+            android:layout_width="73dp"
+            android:layout_height="73dp"
             android:layout_gravity="center"
             android:background="@drawable/c_software"
             android:onClick="botonClick"/>

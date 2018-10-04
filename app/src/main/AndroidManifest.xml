@@ -56,7 +56,9 @@
         <activity android:name=".Forma_Pago" />
         <activity
             android:name=".Principal_zegal"
-            android:label="Bienvenido"></activity>
+            android:label="Bienvenido">
+
+        </activity>
         <activity android:name=".Contrato_Servicio" />
         <activity android:name=".Identificacion"></activity>
         <activity android:name=".Firma_Cliente" />

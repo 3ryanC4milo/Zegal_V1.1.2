@@ -51,9 +51,14 @@
     <!-- TXT Ingresar-->
     <string name="I_Bienvenida">Feliz por verte otra vez</string>
 
+
+    <!--TXT Alert terminos y condiciones-->
+    <string name="Tit">Términos, condiciones y Aviso de privacidad</string>
+    <string name="sub1">Al presionar el botón finalizar, acepta los Términos y condiciones y el Aviso de privacidad</string>
+
     <!--TXT Ayuda com la aplicación-->
     <string name="tit1">Servicios</string>
-    <string name="desc1">Agilizará el proceso de contratar el servicio entre dos personas.</string>
+    <string name="desc1">Con esta aplicación, reducirá los tiempos de trámite al contratar algún servicio.</string>
 
     <string name="tit2">Licencia de Software</string>
     <string name="desc2">Próximamente</string>

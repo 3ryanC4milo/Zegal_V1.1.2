@@ -109,9 +109,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void loadHome()
     {
-        String mail = getIntent().getStringExtra("mail");
-        startActivity(new Intent(WelcomeActivity.this,Principal_zegal.class)
-        .putExtra("mail", mail));
+        //String mail = getIntent().getStringExtra("mail");
+        startActivity(new Intent(WelcomeActivity.this,Principal_zegal.class));
+        //.putExtra("mail", mail));
         finish();
     }
 }
